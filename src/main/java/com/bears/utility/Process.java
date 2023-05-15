@@ -8,6 +8,7 @@ public class Process {
     private String strName;
     private int numName;
     private int current;
+    private int IOEndTime;
 
     private int index;
     private List<Integer> numList;
@@ -19,9 +20,11 @@ public class Process {
         numName = Integer.parseInt(strName.replaceAll("[^0-9]", ""));
         String[] arr = input.substring(idx + 1).split("[^0-9]");
         numList = new ArrayList<>();
-        current = 0;
+
         for (String num : arr){
-            numList.add(Integer.parseInt(num));
+            if (isParsable(num)) {
+                numList.add(Integer.parseInt(num));
+            }
         }
 
         iter = numList.listIterator();
@@ -32,7 +35,7 @@ public class Process {
         return iter.hasNext();
     }
 
-    public int getNext(){
+    public int next(){
         return iter.next();
     }
 
@@ -40,7 +43,13 @@ public class Process {
         return iter.nextIndex()==0;
     }
 
+    public int getIOEndTime() {
+        return IOEndTime;
+    }
 
+    public void setIOEndTime(int IOEndTime) {
+        this.IOEndTime = IOEndTime;
+    }
 
     public String getStrName() {
         return strName;
@@ -66,5 +75,6 @@ public class Process {
             return false;
         }
     }
+
 
 }

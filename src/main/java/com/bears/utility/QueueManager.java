@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class QueueManager{
     private List<Process> list = new LinkedList<>();
-    private ListIterator<Process> iter = list.listIterator();
+    private ListIterator<Process> iter;
 
 
 
@@ -16,16 +16,19 @@ public class QueueManager{
         try{
             File file  = new File(fileName);
             Scanner scanner = new Scanner(file);
-            while (scanner.hasNext()){
+            while (scanner.hasNextLine()){
                 Process process = new Process(scanner.nextLine());
+                if (scanner.hasNextLine()){
+                    scanner.nextLine();
+                }
                 list.add(process);
             }
 
 
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "something went wrong");
         }
-
+        iter = list.listIterator();
     }
 
     public void add(Process process){
@@ -48,6 +51,7 @@ public class QueueManager{
     public boolean hasNext(){
         return iter.hasNext();
     }
+
 
 
 
