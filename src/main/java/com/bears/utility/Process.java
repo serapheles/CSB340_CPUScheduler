@@ -7,7 +7,7 @@ import java.util.ListIterator;
 public class Process {
     private String strName;
     private int numName;
-    private int current;
+
     private int IOEndTime;
 
     private int index;
@@ -76,5 +76,13 @@ public class Process {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Process{" +
+                "strName='" + strName + '\'' +
+                ", numName=" + numName +
+                ", numList=" + numList +
+                ", IOTime ends =" + IOEndTime +
+                '}';
+    }
 }

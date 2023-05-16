@@ -32,9 +32,7 @@ public class QueueManager{
     }
 
     public void add(Process process){
-        if (iter.hasNext()){
-            throw new IllegalStateException();
-        }
+
         list.add(process);
         iter = list.listIterator();
 
@@ -52,8 +50,15 @@ public class QueueManager{
         return iter.hasNext();
     }
 
+    @Override
+    public String toString() {
+        return "QueueManager{" +
+                "list=" + list +
+                '}';
+    }
 
-
-
+    public int getSize(){
+        return list.size();
+    }
 
 }
