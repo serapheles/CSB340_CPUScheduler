@@ -3,52 +3,55 @@ package com.bears.utility;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Scanner;
 
 public class QueueManager{
     private List<Process> list = new LinkedList<>();
-    private ListIterator<Process> iter;
-
+    private int current;
+    private int size;
 
 
     public QueueManager(String fileName){
+        current = 0;
+        size = 0;
         try{
             File file  = new File(fileName);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
                 Process process = new Process(scanner.nextLine());
+
                 if (scanner.hasNextLine()){
                     scanner.nextLine();
                 }
                 list.add(process);
+                size++;
             }
 
 
         }catch (Exception e){
             System.out.println(e.getMessage() + "something went wrong");
         }
-        iter = list.listIterator();
     }
 
     public void add(Process process){
-
         list.add(process);
-        iter = list.listIterator();
-
     }
 
+    //remove current process and current points at next process
     public void remove(){
-        iter.remove();
+        list.remove(current);
+        size--;
     }
 
-    public Process next(){
-        return iter.next();
+    public Process getCurrentProcess(){
+        if (current >= size){
+            return null;
+        }
+
+        return list.get(current);
     }
 
-    public boolean hasNext(){
-        return iter.hasNext();
-    }
+
 
     @Override
     public String toString() {

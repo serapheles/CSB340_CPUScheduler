@@ -12,7 +12,6 @@ public class Process {
 
     private int IOEndTime;
 
-    private int index;
     private List<Integer> numList;
     private ListIterator<Integer> iter;
 
@@ -58,9 +57,6 @@ public class Process {
         return numName;
     }
 
-    public int getIndex() {
-        return index;
-    }
 
     public List<Integer> getNumList() {
         return numList;
@@ -85,6 +81,6 @@ public class Process {
 
     @Override
     public String toString() {
-        return strName + "\t" + getBurstTime();
+        return "\t\t" + strName + "\t" + getBurstTime();
     }
 }
