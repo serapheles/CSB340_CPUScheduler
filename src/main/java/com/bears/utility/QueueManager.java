@@ -52,9 +52,14 @@ public class QueueManager{
 
     @Override
     public String toString() {
-        return "QueueManager{" +
-                "list=" + list +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        for (Process p : list){
+            sb.append(p);
+            sb.append("\n");
+
+        }
+
+        return sb.toString();
     }
 
     public int getSize(){

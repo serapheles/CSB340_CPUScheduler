@@ -8,6 +8,8 @@ public class Process {
     private String strName;
     private int numName;
 
+    private int burstTime;
+
     private int IOEndTime;
 
     private int index;
@@ -20,6 +22,7 @@ public class Process {
         numName = Integer.parseInt(strName.replaceAll("[^0-9]", ""));
         String[] arr = input.substring(idx + 1).split("[^0-9]");
         numList = new ArrayList<>();
+        burstTime = 0;
 
         for (String num : arr){
             if (isParsable(num)) {
@@ -37,10 +40,6 @@ public class Process {
 
     public int next(){
         return iter.next();
-    }
-
-    public boolean isOnCPU(){
-        return iter.nextIndex()==0;
     }
 
     public int getIOEndTime() {
@@ -76,13 +75,16 @@ public class Process {
         }
     }
 
+    public int getBurstTime() {
+        return burstTime;
+    }
+
+    public void setBurstTime(int burstTime) {
+        this.burstTime = burstTime;
+    }
+
     @Override
     public String toString() {
-        return "Process{" +
-                "strName='" + strName + '\'' +
-                ", numName=" + numName +
-                ", numList=" + numList +
-                ", IOTime ends =" + IOEndTime +
-                '}';
+        return strName + "\t" + getBurstTime();
     }
 }
