@@ -16,64 +16,74 @@ public class FCFS {
         readyQueue = new QueueManager("src/main/resources/input");
         currentTime = 0;
         IOQueue = new LinkedList<>();
-        getProcessOnCPU();
 
     }
 
-    public Process getProcessOnCPU(){
-        CPUProcess = readyQueue.getCurrentProcess();
-        readyQueue.remove();
-        return CPUProcess;
-    }
+
 
     public void process(){
-        int burstBegin = 0;
-        int duration = CPUProcess.next();
-        int burstEnd = burstBegin + duration;
-        System.out.println(snapshot());
-        for (;currentTime < 300 && !isCompleted() ; currentTime++){
+        if (readyQueue.getSize() == 0){
+            throw new IllegalStateException("Queue is empty");
+        }
+        CPUProcess = readyQueue.pop();
+        CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
+        while (!isCompleted()){
 
-            if (currentTime == burstEnd) {
-                if (CPUProcess.hasNext()){
-                    CPUProcess.setIOEndTime(currentTime + CPUProcess.next());
+            if (currentTime == CPUProcess.getEvictionTime()){
+                if (!CPUProcess.hasEnded()) {
+                    int IO = CPUProcess.getIOTime();
+                    CPUProcess.setEvictionTime(IO + currentTime);
                     IOQueue.add(CPUProcess);
-                    readyQueue.remove();
-                }else{
-                    readyQueue.remove();
+
+
                 }
+                processingIOQueue();
+                CPUProcess = readyQueue.pop();
+                snapshot();
+
 
             }
+            currentTime++;
         }
+
     }
 
     public boolean isCompleted(){
-        return IOQueue.size() == 0 && readyQueue.getSize() == 0;
+        return readyQueue.isEmpty() && IOQueue.isEmpty() && CPUProcess != null;
     }
 
     public void processingIOQueue(){
-
-            Iterator<Process> iter = IOQueue.iterator();
-            while (iter.hasNext()){
-                Process p = iter.next();
-                int endTime = p.getIOEndTime();
-                if (currentTime >= endTime){
-                    iter.remove();
-                    readyQueue.add(p);
-                    System.out.println("added" + p + "back to the quee");
-                }
+        Iterator<Process> iterator = IOQueue.iterator();
+        while(iterator.hasNext()){
+            Process process = iterator.next();
+            if (process.getEvictionTime() <= currentTime){
+                readyQueue.push(process);
+                iterator.remove();
             }
-
-
+        }
     }
 
     public String snapshot(){
         StringBuilder sb = new StringBuilder();
         sb.append("Current Time: " + currentTime);
-        sb.append("\nNext Process on CPU: " + getProcessOnCPU().getStrName() + "\n");
+        sb.append("\nNext Process on CPU: " + CPUProcess.getStrName() + "\n");
         sb.append("---------------------------------------------------------\n");
         sb.append("List of processes in the ready queue: \n");
         sb.append("\t\tProcess\tBurst\n");
         sb.append(readyQueue);
+        sb.append("\n---------------------------------------------------------\n");
+        sb.append("List of processes in I/O:");
+        sb.append("\t\tProcess\tRemaining I/O time\n");
+        if (IOQueue.isEmpty()){
+            sb.append("\t\t[empty]\n");
+        }else{
+            for (Process ioProcess : IOQueue){
+                sb.append(ioProcess.getStrName() + "\t" + String.valueOf(ioProcess.getEvictionTime() - currentTime));
+            }
+        }
+
+        sb.append("\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
+
         return sb.toString();
     }
 

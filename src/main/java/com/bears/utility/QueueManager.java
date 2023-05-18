@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class QueueManager{
-    private List<Process> list;
-    private int currentIndex;
+    private LinkedList<Process> list;
     private int size;
 
 
     public QueueManager(String fileName){
-        currentIndex = 0;
         list = new LinkedList<>();
         size = 0;
         try{
@@ -39,17 +37,13 @@ public class QueueManager{
     }
 
     //remove current process and current points at next process
-    public void pop(){
-        list.remove(currentIndex);
-        size--;
+    public Process pop(){
+        return list.pollFirst();
+
     }
 
     public Process getCurrentProcess(){
-        if (currentIndex >= size){
-            return null;
-        }
-
-        return list.get(currentIndex);
+        return list.peek();
     }
 
     public boolean isEmpty(){

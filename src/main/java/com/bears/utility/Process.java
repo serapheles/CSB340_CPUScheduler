@@ -12,7 +12,7 @@ public class Process {
     private List<Integer> io_times;
     private List<Integer> burst_times;
     private int currentIndex;
-    private int neededTime;
+    private int evictionTime;
 
 
     public Process(String input){
@@ -25,7 +25,7 @@ public class Process {
         String[] arr = input.substring(idx + 1).split("[^0-9]");
         burst_times = new ArrayList<>();
         io_times = new ArrayList<>();
-        neededTime = 0;
+        evictionTime = 0;
 
         for (int i = 0; i < arr.length-1; i=i+2){
             if (isParsable(arr[i]) && isParsable(arr[i+1])){
@@ -43,9 +43,6 @@ public class Process {
         return strName;
     }
 
-    public void setStrName(String strName) {
-        this.strName = strName;
-    }
 
     public int getProcess_id() {
         return process_id;
@@ -79,17 +76,16 @@ public class Process {
     }
 
     public boolean hasEnded(){
-        return currentIndex >= io_times.size();
+        return currentIndex >= io_times.size() ;
     }
 
 
-
-    public int getNeededTime() {
-        return neededTime;
+    public int getEvictionTime() {
+        return evictionTime;
     }
 
-    public void setNeededTime(int neededTime) {
-        this.neededTime = neededTime;
+    public void setEvictionTime(int time) {
+        this.evictionTime = time;
     }
 
     public static boolean isParsable(String input) {
@@ -106,4 +102,5 @@ public class Process {
     public String toString() {
         return "\t\t" + strName + "\t" + getBurstTme();
     }
+
 }
