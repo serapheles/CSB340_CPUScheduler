@@ -42,9 +42,6 @@ public class FCFS {
                     readyQueue.remove();
                 }
 
-
-
-
             }
         }
     }

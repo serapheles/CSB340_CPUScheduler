@@ -6,60 +6,90 @@ import java.util.ListIterator;
 
 public class Process {
     private String strName;
-    private int numName;
+    private int process_id;
 
-    private int burstTime;
+    int priority;
+    private List<Integer> io_times;
+    private List<Integer> burst_times;
+    private int currentIndex;
+    private int neededTime;
 
-    private int IOEndTime;
-
-    private List<Integer> numList;
-    private ListIterator<Integer> iter;
 
     public Process(String input){
+        if (input == null || input.length() == 0){
+            throw new IllegalStateException("input string is empty");
+        }
         int idx = input.indexOf('{');
         strName = input.substring(0, idx).replace(" ", "");
-        numName = Integer.parseInt(strName.replaceAll("[^0-9]", ""));
+        process_id = Integer.parseInt(strName.replaceAll("[^0-9]", ""));
         String[] arr = input.substring(idx + 1).split("[^0-9]");
-        numList = new ArrayList<>();
-        burstTime = 0;
+        burst_times = new ArrayList<>();
+        io_times = new ArrayList<>();
+        neededTime = 0;
 
-        for (String num : arr){
-            if (isParsable(num)) {
-                numList.add(Integer.parseInt(num));
+        for (int i = 0; i < arr.length-1; i=i+2){
+            if (isParsable(arr[i]) && isParsable(arr[i+1])){
+                burst_times.add(Integer.parseInt(arr[i]));
+                io_times.add(Integer.parseInt(arr[i+1]));
             }
         }
 
-        iter = numList.listIterator();
-
+        burst_times.add(Integer.parseInt(arr[arr.length -1]));
+        this.priority = -1;
     }
 
-    public boolean hasNext(){
-        return iter.hasNext();
-    }
-
-    public int next(){
-        return iter.next();
-    }
-
-    public int getIOEndTime() {
-        return IOEndTime;
-    }
-
-    public void setIOEndTime(int IOEndTime) {
-        this.IOEndTime = IOEndTime;
-    }
 
     public String getStrName() {
         return strName;
     }
 
-    public int getNumName() {
-        return numName;
+    public void setStrName(String strName) {
+        this.strName = strName;
+    }
+
+    public int getProcess_id() {
+        return process_id;
+    }
+
+    public int getIOTime(){
+        if (currentIndex < io_times.size()){
+            return io_times.get(currentIndex);
+        }
+
+        return -1; //signal end
+    }
+
+    public int getBurstTme(){
+        return burst_times.get(currentIndex);
     }
 
 
-    public List<Integer> getNumList() {
-        return numList;
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+
+    //
+    public void advanceIterator(){
+        currentIndex++;
+    }
+
+    public boolean hasEnded(){
+        return currentIndex >= io_times.size();
+    }
+
+
+
+    public int getNeededTime() {
+        return neededTime;
+    }
+
+    public void setNeededTime(int neededTime) {
+        this.neededTime = neededTime;
     }
 
     public static boolean isParsable(String input) {
@@ -71,16 +101,9 @@ public class Process {
         }
     }
 
-    public int getBurstTime() {
-        return burstTime;
-    }
-
-    public void setBurstTime(int burstTime) {
-        this.burstTime = burstTime;
-    }
 
     @Override
     public String toString() {
-        return "\t\t" + strName + "\t" + getBurstTime();
+        return "\t\t" + strName + "\t" + getBurstTme();
     }
 }
