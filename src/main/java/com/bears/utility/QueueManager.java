@@ -7,12 +7,10 @@ import java.util.Scanner;
 
 public class QueueManager{
     private LinkedList<Process> list;
-    private int size;
-
 
     public QueueManager(String fileName){
         list = new LinkedList<>();
-        size = 0;
+
         try{
             File file  = new File(fileName);
             Scanner scanner = new Scanner(file);
@@ -23,7 +21,6 @@ public class QueueManager{
                     scanner.nextLine();
                 }
                 list.add(process);
-                size++;
             }
 
 
@@ -40,10 +37,6 @@ public class QueueManager{
     public Process pop(){
         return list.pollFirst();
 
-    }
-
-    public Process getCurrentProcess(){
-        return list.peek();
     }
 
     public boolean isEmpty(){

@@ -76,8 +76,9 @@ public class Process {
         currentIndex++;
     }
 
-    public boolean hasEnded(){
-        return currentIndex >= io_times.size() ;
+
+    public boolean isOnLastBurst(){
+        return currentIndex == burst_times.size() -1;
     }
 
 

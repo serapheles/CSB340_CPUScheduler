@@ -29,28 +29,29 @@ public class FCFS {
         CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
      //   System.out.printf(snapshot());
         while (!isCompleted()){
-            System.out.println(snapshot());
-            if (currentTime >= CPUProcess.getEvictionTime()){
-                if (!CPUProcess.hasEnded()) {
+        //    System.out.println(snapshot());
+            if (CPUProcess != null && currentTime >= CPUProcess.getEvictionTime()){
+                if (!CPUProcess.isOnLastBurst()) {
                     int IO = CPUProcess.getIOTime();
                     CPUProcess.setEvictionTime(IO + currentTime);
                     CPUProcess.advanceIterator();
                     IOQueue.add(CPUProcess);
                 }
-                processingIOQueue();
+                CPUProcess = null;
+            }
+            processingIOQueue();
+            if (!readyQueue.isEmpty()) {
                 CPUProcess = readyQueue.pop();
                 CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
-                System.out.println(snapshot());
-
-
             }
+            System.out.println(snapshot());
             currentTime++;
         }
-
+     //   System.out.println(snapshot());
     }
 
     public boolean isCompleted(){
-        return readyQueue.isEmpty() && IOQueue.isEmpty() && CPUProcess != null;
+        return readyQueue.isEmpty() && IOQueue.isEmpty() && CPUProcess == null;
     }
 
     public void processingIOQueue(){
@@ -67,7 +68,11 @@ public class FCFS {
     public String snapshot(){
         StringBuilder sb = new StringBuilder();
         sb.append("Current Time: " + currentTime);
-        sb.append("\nNext Process on CPU: " + CPUProcess.getStrName() + "\n");
+        if (CPUProcess == null){
+            sb.append("\nNext Process on CPU: " + "NA" + "\n");
+        }else {
+            sb.append("\nNext Process on CPU: ").append(CPUProcess.getStrName()).append(String.format("    (%d) ", CPUProcess.getEvictionTime() -currentTime)).append("\n");
+        }
         sb.append("---------------------------------------------------------\n");
         sb.append("List of processes in the ready queue: \n");
         sb.append("\t\tProcess\tBurst\n");
