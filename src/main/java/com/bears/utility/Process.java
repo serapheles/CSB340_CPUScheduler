@@ -61,6 +61,11 @@ public class Process {
         return burst_times.get(currentIndex);
     }
 
+    public void setBurstTme(int burstTime){
+        burst_times.set(currentIndex, burstTime);
+    }
+
+
 
     public int getPriority() {
         return priority;

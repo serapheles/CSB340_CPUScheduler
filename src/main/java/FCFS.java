@@ -25,8 +25,8 @@ public class FCFS {
         if (readyQueue.getSize() == 0){
             throw new IllegalStateException("Queue is empty");
         }
-        CPUProcess = readyQueue.pop();
-        CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
+      //  CPUProcess = readyQueue.pop();
+      //  CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
      //   System.out.printf(snapshot());
         while (!isCompleted()){
         //    System.out.println(snapshot());
@@ -43,11 +43,12 @@ public class FCFS {
             if (!readyQueue.isEmpty() && CPUProcess == null) {
                 CPUProcess = readyQueue.pop();
                 CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
+                System.out.println(snapshot());
             }
-            System.out.println(snapshot());
+
             currentTime++;
         }
-     //   System.out.println(snapshot());
+
     }
 
     public boolean isCompleted(){
