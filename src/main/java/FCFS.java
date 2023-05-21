@@ -27,19 +27,20 @@ public class FCFS {
         }
         CPUProcess = readyQueue.pop();
         CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
+     //   System.out.printf(snapshot());
         while (!isCompleted()){
-
-            if (currentTime == CPUProcess.getEvictionTime()){
+            System.out.println(snapshot());
+            if (currentTime >= CPUProcess.getEvictionTime()){
                 if (!CPUProcess.hasEnded()) {
                     int IO = CPUProcess.getIOTime();
                     CPUProcess.setEvictionTime(IO + currentTime);
+                    CPUProcess.advanceIterator();
                     IOQueue.add(CPUProcess);
-
-
                 }
                 processingIOQueue();
                 CPUProcess = readyQueue.pop();
-                snapshot();
+                CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
+                System.out.println(snapshot());
 
 
             }

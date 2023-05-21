@@ -1,6 +1,7 @@
 package com.bears.utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -23,18 +24,18 @@ public class Process {
         strName = input.substring(0, idx).replace(" ", "");
         process_id = Integer.parseInt(strName.replaceAll("[^0-9]", ""));
         String[] arr = input.substring(idx + 1).split("[^0-9]");
+        int[] nums = Arrays.stream(arr).filter(Process::isParsable).mapToInt(Integer::parseInt).toArray();
+
         burst_times = new ArrayList<>();
         io_times = new ArrayList<>();
         evictionTime = 0;
 
-        for (int i = 0; i < arr.length-1; i=i+2){
-            if (isParsable(arr[i]) && isParsable(arr[i+1])){
-                burst_times.add(Integer.parseInt(arr[i]));
-                io_times.add(Integer.parseInt(arr[i+1]));
-            }
+        for (int i = 0; i+1 < nums.length; i=i+2){
+                burst_times.add(nums[i]);
+                io_times.add(nums[i+1]);
         }
 
-        burst_times.add(Integer.parseInt(arr[arr.length -1]));
+        burst_times.add(nums[nums.length -1]);
         this.priority = -1;
     }
 
