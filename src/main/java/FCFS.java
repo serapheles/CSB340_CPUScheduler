@@ -40,7 +40,7 @@ public class FCFS {
                 CPUProcess = null;
             }
             processingIOQueue();
-            if (!readyQueue.isEmpty()) {
+            if (!readyQueue.isEmpty() && CPUProcess == null) {
                 CPUProcess = readyQueue.pop();
                 CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
             }
@@ -71,7 +71,7 @@ public class FCFS {
         if (CPUProcess == null){
             sb.append("\nNext Process on CPU: " + "NA" + "\n");
         }else {
-            sb.append("\nNext Process on CPU: ").append(CPUProcess.getStrName()).append(String.format("    (%d) ", CPUProcess.getEvictionTime() -currentTime)).append("\n");
+            sb.append("\nNext Process on CPU: ").append(CPUProcess.getStrName()).append(String.format(" (%d) ", CPUProcess.getEvictionTime() -currentTime)).append("\n");
         }
         sb.append("---------------------------------------------------------\n");
         sb.append("List of processes in the ready queue: \n");
@@ -84,7 +84,7 @@ public class FCFS {
             sb.append("\t\t[empty]\n");
         }else{
             for (Process ioProcess : IOQueue){
-                sb.append(ioProcess.getStrName() + "\t" + String.valueOf(ioProcess.getEvictionTime() - currentTime));
+                sb.append(ioProcess.getStrName() + "\t" + String.valueOf(ioProcess.getEvictionTime() - currentTime) + "\n");
             }
         }
 
