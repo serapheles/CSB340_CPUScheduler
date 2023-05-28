@@ -4,9 +4,10 @@ import java.io.File;
 import java.util.*;
 
 public class PQueueManager {
-    private PriorityQueue<Process>  pq = new PriorityQueue<>((p1, p2) -> p1.getPriority() - p2.getPriority());
+    private PriorityQueue<Process>  pq = new PriorityQueue<>((p1, p2) -> p1.priority == p2.priority ?
+            p1.getReadyQueueArrivalTime()- p2.getReadyQueueArrivalTime() : p1.priority - p2.priority);
 
-    private static final int[] priorityArray = new int[]{3, 6, 5, 4, 1, 2, 8, 7};
+    private static final int[] priorityArray = new int[]{3, 6};
 
     public PQueueManager(String fileName){
 
@@ -41,8 +42,27 @@ public class PQueueManager {
         return pq.poll();
     }
 
+    public int size(){
+        return pq.size();
+    }
+
+    public Process peek(){
+        return pq.peek();
+    }
 
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Process[] arr = pq.toArray(new Process[0]);
+        Arrays.sort(arr, Comparator.comparingInt(Process::getReadyQueueArrivalTime));
+        for (Process p : arr){
+            sb.append(p);
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
 
 
 

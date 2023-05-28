@@ -15,6 +15,8 @@ public class Process {
     private int currentIndex;
     private int evictionTime;
 
+    private int readyQueueArrivalTime;
+
 
     public Process(String input){
         if (input == null || input.length() == 0){
@@ -29,6 +31,7 @@ public class Process {
         burst_times = new ArrayList<>();
         io_times = new ArrayList<>();
         evictionTime = 0;
+        readyQueueArrivalTime = 0;
 
         for (int i = 0; i+1 < nums.length; i=i+2){
                 burst_times.add(nums[i]);
@@ -57,6 +60,10 @@ public class Process {
         return -1; //signal end
     }
 
+    public void setIOTme(int ioTime){
+        io_times.set(currentIndex, ioTime);
+    }
+
     public int getBurstTme(){
         return burst_times.get(currentIndex);
     }
@@ -66,6 +73,13 @@ public class Process {
     }
 
 
+    public int getReadyQueueArrivalTime() {
+        return readyQueueArrivalTime;
+    }
+
+    public void setReadyQueueArrivalTime(int readyQueueArrivalTime) {
+        this.readyQueueArrivalTime = readyQueueArrivalTime;
+    }
 
     public int getPriority() {
         return priority;
@@ -79,6 +93,11 @@ public class Process {
     //
     public void advanceIterator(){
         currentIndex++;
+    }
+
+
+    public boolean isFinished(){
+        return currentIndex == burst_times.size() -1 && burst_times.get(currentIndex) == 0;
     }
 
 
@@ -108,6 +127,10 @@ public class Process {
     @Override
     public String toString() {
         return "\t\t" + strName + "\t" + getBurstTme();
+    }
+
+    public boolean equals(Process process){
+        return this.priority == process.priority && this.strName.equals(process.strName);
     }
 
 }

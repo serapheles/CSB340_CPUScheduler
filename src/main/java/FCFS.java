@@ -2,6 +2,9 @@ import com.bears.utility.Process;
 import com.bears.utility.QueueManager;
 
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class FCFS {
@@ -12,11 +15,21 @@ public class FCFS {
 
     private Process CPUProcess;
 
+    private List<Process> completedList;
+
+    private int idleTime = 0;
+
+    private boolean flag = true; //toggle for output;
+
+    private StringBuilder output;
+
     public FCFS() {
         readyQueue = new QueueManager("src/main/resources/input");
         currentTime = 0;
         IOQueue = new LinkedList<>();
-
+        idleTime = 0;
+        completedList = new LinkedList<>();
+        output = new StringBuilder();
     }
 
 
@@ -30,24 +43,49 @@ public class FCFS {
      //   System.out.printf(snapshot());
         while (!isCompleted()){
         //    System.out.println(snapshot());
+
             if (CPUProcess != null && currentTime >= CPUProcess.getEvictionTime()){
                 if (!CPUProcess.isOnLastBurst()) {
                     int IO = CPUProcess.getIOTime();
                     CPUProcess.setEvictionTime(IO + currentTime);
                     CPUProcess.advanceIterator();
                     IOQueue.add(CPUProcess);
+                }else{
+                    completedList.add(CPUProcess);
                 }
+
+
+
                 CPUProcess = null;
             }
             processingIOQueue();
+
             if (!readyQueue.isEmpty() && CPUProcess == null) {
                 CPUProcess = readyQueue.pop();
                 CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
-                System.out.println(snapshot());
+
+                if (flag) {
+                    String str = snapshot();
+                    System.out.println(str);
+                    output.append(str);
+                }
+            }
+
+            if (CPUProcess == null){
+                idleTime++;
             }
 
             currentTime++;
         }
+
+
+        if (flag) {
+            currentTime--;
+            String str = snapshot();
+            System.out.println(str);
+            output.append(str);
+        }
+
 
     }
 
@@ -88,10 +126,31 @@ public class FCFS {
                 sb.append(ioProcess.getStrName() + "\t" + String.valueOf(ioProcess.getEvictionTime() - currentTime) + "\n");
             }
         }
+        sb.append("\n---------------------------------------------------------\n");
+        for (Process completedProcess : completedList){
+            sb.append(completedProcess.getStrName() + "\t");
+        }
 
-        sb.append("\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
-
+        sb.append("\n\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
+        outputToFile("FCFS_output", sb);
         return sb.toString();
+    }
+
+    public void outputToFile(String filename, StringBuilder sb) {
+        FileWriter fileWriter = null;
+        try {
+            File file = new File(filename);
+            if (!file.exists()){
+                file.createNewFile();
+            }
+            fileWriter = new FileWriter(filename, true);
+            fileWriter.write(sb.toString());
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
 
