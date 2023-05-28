@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.ArrayDeque;
 
 public class MLFQ extends Multilevel {
 
@@ -22,33 +22,14 @@ public class MLFQ extends Multilevel {
         }
 
         tick();
-        System.out.println(readyQueue);
-        System.out.println(allJobs);
-
-        System.out.println("Total time elapsed: " + timeElapsed + "\n");
-        System.out.printf("Cpu utilization: %.2f\n", getRatio());
-        int totalWait = 0;
-        int totalTurnaround = 0;
-        int totalResponse = 0;
-        for (Job j : readyQueue) {
-            totalWait += j.getWaitTime();
-            totalTurnaround += (j.getWaitTime() + j.getNeededCPUTime() + j.getNeededIOTime());
-            totalResponse += j.getResponseTime();
-            System.out.println("Process " + j.getProcessId() + ":");
-            System.out.println("Wait time: " + j.getWaitTime());
-            System.out.println("Turnaround: " + (j.getWaitTime() + j.getNeededCPUTime() + j.getNeededIOTime()));
-            System.out.println("Response: " + j.getResponseTime() + "\n");
-        }
-        System.out.printf("Average wait time: %.2f\n", (double) totalWait / (double) readyQueue.size());
-        System.out.printf("Average turnaround: %.2f\n", (double) totalTurnaround / (double) readyQueue.size());
-        System.out.printf("Average response time: %.2f\n", (double) totalResponse / (double) readyQueue.size());
+        finalReport();
     }
 
     public static void main(String[] args) {
         new MLFQ();
     }
 
-    private void administrivia(Job job){
+    private void administrivia(Job job) {
         checkIfFirstResponse(job);
         updateWaitTimes(job);
     }
@@ -123,43 +104,5 @@ public class MLFQ extends Multilevel {
             timeElapsed++;
         }
     }
-
-    /**
-     * Updates the process that currently has priority.
-     *
-     * @param queue The current queue.
-     * @return Effectively, if the process yields priority.
-     */
-    private boolean tock(ArrayDeque<Job> queue) {
-        Integer time = queue.peek().decrementCpuBurst();
-        if (time == null || time < 0) {
-            System.out.println("Process id: " + queue.peek().getProcessId());
-            System.out.println("Remaining burst time: " + queue.peek().checkNextCpuBurst());
-            System.out.println(time);
-            throw new RuntimeException();
-        }
-        //Refactor this later, in the magical world where there is time.
-        if (time == 0) {
-            System.out.println("Burst complete for process: " + queue.peek().getProcessId());
-            queue.peek().getNextCpuBurst();
-            //need to remove the value from the job's time
-            if (queue.peek().checkNextIOBurst() == null) {
-                //Stop updating wait time
-                Job tempJob = queue.remove();
-                //
-                allJobs.remove(tempJob);
-                readyQueue.add(tempJob);
-                if (output) {
-                    System.out.println("Process complete: " + tempJob.getProcessId());
-                }
-            } else {
-                System.out.println("Adding to IO: " + queue.peek().getProcessId());
-                ioJobs.put(queue.remove(), queue);
-            }
-            return true;
-        }
-        return false;
-    }
-
 
 }

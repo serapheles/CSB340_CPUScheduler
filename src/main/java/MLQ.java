@@ -21,6 +21,7 @@ public class MLQ extends Multilevel {
             }
         }
         tick();
+        finalReport();
     }
 
     private void tick() {
@@ -71,12 +72,12 @@ public class MLQ extends Multilevel {
         updateWaitTimes(job);
     }
 
-    private boolean tock(ArrayDeque<Job> priorityHigh) {
-        return false;
-    }
-
     private void updateWaitTimes(Job currentJob) {
         updateWaitTimes(currentJob, priorityHigh);
         updateWaitTimes(currentJob, priorityLow);
+    }
+
+    public static void main(String[] args) {
+        new MLQ();
     }
 }
