@@ -1,17 +1,44 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class Multilevel {
 
+    protected final ArrayDeque<Job> readyQueue;
+    //Technically this is a sorted collection, but the optimizations that take advantage of that aren't worth it for
+    //this assignment.
+    protected final TreeMap<Job, ArrayDeque<Job>> ioJobs;
+    protected final ArrayList<Job> allJobs;
+    protected final boolean output = true;
     protected int timeElapsed;
     protected int ioOnly;
 
-    public Multilevel(){
+    public Multilevel() {
+        readyQueue = open_processes();
+        allJobs = new ArrayList<>(readyQueue);
+        ioJobs = new TreeMap<Job, ArrayDeque<Job>>(Comparator.comparingInt(Job::checkNextIOBurst).thenComparingInt(Job::getPriority));
 
+    }
+
+    protected void updateIO(){
+        if (!ioJobs.isEmpty()) {
+            Job tempJob;
+            Iterator<Map.Entry<Job, ArrayDeque<Job>>> it = ioJobs.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<Job, ArrayDeque<Job>> mapping = it.next();
+                tempJob = mapping.getKey();
+                Integer timeRemaining = tempJob.decrementIOBurst();
+                if (timeRemaining == null || timeRemaining < 0) {
+                    throw new RuntimeException();
+                }
+                if (timeRemaining == 0) {
+                    mapping.getKey().getNextIOBurst();
+                    mapping.getValue().add(mapping.getKey());
+                    it.remove();
+
+                }
+            }
+        }
     }
 
     /**
@@ -73,9 +100,34 @@ public abstract class Multilevel {
         return (1.0 - ((double) ioOnly / (double) timeElapsed)) * 100.0;
     }
 
-    protected void administrivia(Job job) {
+    protected void checkIfFirstResponse(Job job){
         if (job.getResponseTime() == -1) {
             job.setResponseTime(timeElapsed);
+        }
+    }
+
+    /**
+     * Outputs status information.
+     *
+     * @param currentJob The currently running process.
+     */
+    protected void displayStatus(Job currentJob) {
+        StringBuilder text = new StringBuilder();
+        text.append("Total elapsed time: ").append(timeElapsed).append("\n");
+        text.append("Currently running process: ").append(currentJob.getProcessId()).append("\n");
+        text.append("Processes in I/O:\n");
+        for (Job tempJob : ioJobs.keySet()) {
+            text.append(tempJob.getProcessId()).append(", remaining time: ").append(tempJob.checkNextIOBurst()).append("\n\n");
+        }
+        System.out.println(text);
+    }
+
+    protected void updateWaitTimes(Job currentJob, ArrayDeque<Job> queue){
+        for (Job j : queue) {
+            if (j.equals(currentJob)) {
+                continue;
+            }
+            j.updateWaitTime();
         }
     }
 

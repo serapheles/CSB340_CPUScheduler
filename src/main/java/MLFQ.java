@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class MLFQ extends Multilevel {
-    private final ArrayDeque<Job> readyQueue;
 
     //Quantum 5
     private final ArrayDeque<Job> priority0;
@@ -12,21 +11,11 @@ public class MLFQ extends Multilevel {
     //FCFS
     private final ArrayDeque<Job> priority2;
 
-    //Technically this is a sorted collection, but the optimizations that take advantage of that aren't worth it for
-    //this assignment.
-    private final TreeMap<Job, ArrayDeque<Job>> ioJobs;
-
-    private final ArrayList<Job> allJobs;
-    private final boolean output = true;
-
-
     public MLFQ() {
-        readyQueue = open_processes();
-        allJobs = new ArrayList<>(readyQueue);
+        super();
         priority0 = new ArrayDeque<Job>();
         priority1 = new ArrayDeque<Job>();
         priority2 = new ArrayDeque<Job>();
-        ioJobs = new TreeMap<Job, ArrayDeque<Job>>(Comparator.comparingInt(Job::checkNextIOBurst).thenComparingInt(Job::getPriority));
 
         while (!readyQueue.isEmpty()) {
             priority0.add(readyQueue.remove());
@@ -59,27 +48,15 @@ public class MLFQ extends Multilevel {
         new MLFQ();
     }
 
+    private void administrivia(Job job){
+        checkIfFirstResponse(job);
+        updateWaitTimes(job);
+    }
+
     private void updateWaitTimes(Job currentJob) {
-        System.out.println(currentJob.getProcessId());
-        System.out.println(timeElapsed);
-        for (Job j : priority0) {
-            if (j.equals(currentJob)) {
-                continue;
-            }
-            j.updateWaitTime();
-        }
-        for (Job j : priority1) {
-            if (j.equals(currentJob)) {
-                continue;
-            }
-            j.updateWaitTime();
-        }
-        for (Job j : priority2) {
-            if (j.equals(currentJob)) {
-                continue;
-            }
-            j.updateWaitTime();
-        }
+        updateWaitTimes(currentJob, priority0);
+        updateWaitTimes(currentJob, priority1);
+        updateWaitTimes(currentJob, priority2);
     }
 
     /**
@@ -90,26 +67,7 @@ public class MLFQ extends Multilevel {
         byte lastQueue = 0;
 
         while (!(priority0.isEmpty() && priority1.isEmpty() && priority2.isEmpty() && ioJobs.isEmpty())) {
-//            System.out.println(timeElapsed);
-
-            if (!ioJobs.isEmpty()) {
-                Job tempJob;
-                Iterator<Map.Entry<Job, ArrayDeque<Job>>> it = ioJobs.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry<Job, ArrayDeque<Job>> mapping = it.next();
-                    tempJob = mapping.getKey();
-                    Integer timeRemaining = tempJob.decrementIOBurst();
-                    if (timeRemaining == null || timeRemaining < 0) {
-                        throw new RuntimeException();
-                    }
-                    if (timeRemaining == 0) {
-                        mapping.getKey().getNextIOBurst();
-                        mapping.getValue().add(mapping.getKey());
-                        it.remove();
-
-                    }
-                }
-            }
+            updateIO();
 
             if (!priority0.isEmpty()) {
                 if (lastQueue != 0) {
@@ -120,7 +78,6 @@ public class MLFQ extends Multilevel {
                     }
                 }
                 administrivia(priority0.peek());
-                updateWaitTimes(priority0.peek());
                 if (tock(priority0)) {
                     lastQueue = -1;
                     timeElapsed++;
@@ -139,7 +96,6 @@ public class MLFQ extends Multilevel {
                     }
                 }
                 administrivia(priority1.peek());
-                updateWaitTimes(priority1.peek());
                 if (tock(priority1)) {
                     lastQueue = -1;
                     timeElapsed++;
@@ -158,7 +114,6 @@ public class MLFQ extends Multilevel {
                     }
                 }
                 administrivia(priority2.peek());
-                updateWaitTimes(priority2.peek());
                 if (tock(priority2)) {
                     lastQueue = -1;
                 }
@@ -206,19 +161,5 @@ public class MLFQ extends Multilevel {
         return false;
     }
 
-    /**
-     * Outputs status information.
-     *
-     * @param currentJob The currently running process.
-     */
-    private void displayStatus(Job currentJob) {
-        StringBuilder text = new StringBuilder();
-        text.append("Total elapsed time: ").append(timeElapsed).append("\n");
-        text.append("Currently running process: ").append(currentJob.getProcessId()).append("\n");
-        text.append("Processes in I/O:\n");
-        for (Job tempJob : ioJobs.keySet()) {
-            text.append(tempJob.getProcessId()).append(", remaining time: ").append(tempJob.checkNextIOBurst()).append("\n\n");
-        }
-        System.out.println(text);
-    }
+
 }

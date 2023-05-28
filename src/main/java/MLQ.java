@@ -1,9 +1,6 @@
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 
-public class MLQ extends Multilevel{
-
-    private final ArrayDeque<Job> readyQueue;
+public class MLQ extends Multilevel {
 
     //Quantum 5
     private final ArrayDeque<Job> priorityHigh;
@@ -11,16 +8,75 @@ public class MLQ extends Multilevel{
     //Quantum 10
     private final ArrayDeque<Job> priorityLow;
 
-    private final ArrayList<Job> allJobs;
+    public MLQ() {
+        super();
+        priorityHigh = new ArrayDeque<>();
+        priorityLow = new ArrayDeque<>();
 
-    public MLQ(ArrayDeque<Job> priorityHigh, ArrayDeque<Job> priorityLow){
-        this.priorityHigh = priorityHigh;
-        this.priorityLow = priorityLow;
-        readyQueue = open_processes();
-        allJobs = new ArrayList<>(readyQueue);
+        while (!readyQueue.isEmpty()) {
+            if (readyQueue.peek().getPriority() < 5) {
+                priorityHigh.add(readyQueue.remove());
+            } else {
+                priorityLow.add(readyQueue.remove());
+            }
+        }
+        tick();
+    }
 
-//        ioJobs = new TreeMap<Job, ArrayDeque<Job>>(Comparator.comparingInt(Job::checkNextIOBurst).thenComparingInt(Job::getPriority));
+    private void tick() {
+        int clock = 0;
+        byte lastQueue = 0;
 
+        while (!(priorityHigh.isEmpty() && priorityLow.isEmpty() && ioJobs.isEmpty())) {
+            updateIO();
 
+            if (!priorityHigh.isEmpty()) {
+                if (lastQueue != 0) {
+                    clock = 0;
+                    lastQueue = 0;
+                    if (output) {
+                        displayStatus(priorityHigh.peek());
+                    }
+                }
+                administrivia(priorityHigh.peek());
+                updateWaitTimes(priorityHigh.peek());
+                if (tock(priorityHigh)) {
+                    lastQueue = -1;
+                    timeElapsed++;
+                    continue;
+                }
+            } else if (!priorityLow.isEmpty()) {
+                if (lastQueue != 1) {
+                    clock = 0;
+                    lastQueue = 1;
+                    if (output) {
+                        displayStatus(priorityLow.peek());
+                    }
+                }
+                administrivia(priorityLow.peek());
+                if (tock(priorityLow)) {
+                    lastQueue = -1;
+                    timeElapsed++;
+                    continue;
+                }
+            } else {
+                ioOnly++;
+            }
+            timeElapsed++;
+        }
+    }
+
+    private void administrivia(Job job) {
+        checkIfFirstResponse(job);
+        updateWaitTimes(job);
+    }
+
+    private boolean tock(ArrayDeque<Job> priorityHigh) {
+        return false;
+    }
+
+    private void updateWaitTimes(Job currentJob) {
+        updateWaitTimes(currentJob, priorityHigh);
+        updateWaitTimes(currentJob, priorityLow);
     }
 }
