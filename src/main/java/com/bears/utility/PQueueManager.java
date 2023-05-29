@@ -7,17 +7,18 @@ public class PQueueManager {
     private PriorityQueue<Process>  pq = new PriorityQueue<>((p1, p2) -> p1.priority == p2.priority ?
             p1.getReadyQueueArrivalTime()- p2.getReadyQueueArrivalTime() : p1.priority - p2.priority);
 
-    private static final int[] priorityArray = new int[]{3, 6};
+    private int[] priorityArray;
 
-    public PQueueManager(String fileName){
+    public PQueueManager(String fileName, int[] priorityArray){
 
         try{
             File file  = new File(fileName);
             Scanner scanner = new Scanner(file);
+            this.priorityArray = priorityArray;
             int i = 0;
             while (scanner.hasNextLine()){
                 Process process = new Process(scanner.nextLine());
-                process.setPriority(priorityArray[i++]);
+                process.setPriority(this.priorityArray[i++]);
                 pq.offer(process);
                 if (scanner.hasNextLine()){
                     scanner.nextLine();

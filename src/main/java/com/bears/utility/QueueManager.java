@@ -16,6 +16,7 @@ public class QueueManager{
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
                 Process process = new Process(scanner.nextLine());
+                process.setInitialArrivalTime(0);
 
                 if (scanner.hasNextLine()){
                     scanner.nextLine();

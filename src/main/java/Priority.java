@@ -2,6 +2,9 @@ import com.bears.utility.PQueueManager;
 import com.bears.utility.Process;
 
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -12,9 +15,14 @@ public class Priority {
     private Queue<Process> IOQueue;
 
     private Process CPUProcess;
+    private boolean flag;
+    String outputFile;
 
-    public Priority () {
-        readyQueue = new PQueueManager("src/main/resources/input");
+    public Priority (String filename, String outputFile, boolean outputFlag, int[] priorities) {
+        readyQueue = new PQueueManager(filename, priorities);
+        this.outputFile = outputFile;
+        flag = outputFlag;
+
         currentTime = 0;
         IOQueue = new LinkedList<>();
         CPUProcess = null;
@@ -100,9 +108,31 @@ public class Priority {
         }
 
         sb.append("\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
-
+        outputToFile(outputFile, sb);
         return sb.toString();
     }
+
+    public void outputToFile(String filename, StringBuilder sb) {
+        if (flag == false){
+            return;
+        }
+
+        FileWriter fileWriter = null;
+        try {
+            File file = new File(filename);
+            if (!file.exists()){
+                file.createNewFile();
+            }
+            fileWriter = new FileWriter(filename, true);
+            fileWriter.write(sb.toString());
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+
 
 
 

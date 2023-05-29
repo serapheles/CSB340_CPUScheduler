@@ -15,6 +15,13 @@ public class Process {
     private int currentIndex;
     private int evictionTime;
 
+    private int exitTime;
+    private int initialArrivalTime;
+    private int totalBurstTime;
+    private int initialCPUTime;
+    private int totalIOTime;
+
+
     private int readyQueueArrivalTime;
 
 
@@ -32,6 +39,8 @@ public class Process {
         io_times = new ArrayList<>();
         evictionTime = 0;
         readyQueueArrivalTime = 0;
+        initialCPUTime = -1;
+
 
         for (int i = 0; i+1 < nums.length; i=i+2){
                 burst_times.add(nums[i]);
@@ -40,6 +49,16 @@ public class Process {
 
         burst_times.add(nums[nums.length -1]);
         this.priority = -1;
+
+        totalBurstTime = 0;
+        for (int burst : burst_times){
+            totalBurstTime += burst;
+        }
+
+        totalIOTime = 0;
+        for (int ioTime : io_times){
+            totalIOTime += ioTime;
+        }
     }
 
 
@@ -73,6 +92,8 @@ public class Process {
     }
 
 
+
+
     public int getReadyQueueArrivalTime() {
         return readyQueueArrivalTime;
     }
@@ -94,13 +115,6 @@ public class Process {
     public void advanceIterator(){
         currentIndex++;
     }
-
-
-    public boolean isFinished(){
-        return currentIndex == burst_times.size() -1 && burst_times.get(currentIndex) == 0;
-    }
-
-
     public boolean isOnLastBurst(){
         return currentIndex == burst_times.size() -1;
     }
@@ -112,6 +126,11 @@ public class Process {
 
     public void setEvictionTime(int time) {
         this.evictionTime = time;
+    }
+
+
+    public boolean isFinished(){
+        return currentIndex == burst_times.size() -1 && burst_times.get(currentIndex) == 0;
     }
 
     public static boolean isParsable(String input) {
@@ -133,4 +152,41 @@ public class Process {
         return this.priority == process.priority && this.strName.equals(process.strName);
     }
 
+    public int getExitTime() {
+        return exitTime;
+    }
+
+    public void setExitTime(int exitTime) {
+        this.exitTime = exitTime;
+    }
+
+    public int getInitialArrivalTime() {
+        return initialArrivalTime;
+    }
+
+    public void setInitialArrivalTime(int initialArrivalTime) {
+        this.initialArrivalTime = initialArrivalTime;
+    }
+
+
+
+    public int getInitialCPUTime() {
+        return initialCPUTime;
+    }
+
+    public void setInitialCPUTime(int initialCPUTime) {
+        this.initialCPUTime = initialCPUTime;
+    }
+
+    public int getResponseTime(){
+        return initialCPUTime - initialArrivalTime;
+    }
+
+    public int getWaitingTime(){
+        return exitTime - initialArrivalTime - totalBurstTime - totalIOTime;
+    }
+
+    public int getTurnAroundTime(){
+        return exitTime - initialArrivalTime;
+    }
 }

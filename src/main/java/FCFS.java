@@ -15,34 +15,40 @@ public class FCFS {
 
     private Process CPUProcess;
 
-    private List<Process> completedList;
+    private LinkedList<Process> completedList;
 
     private int idleTime = 0;
 
-    private boolean flag = true; //toggle for output;
+    private int CPUTime = 0;
+
+    private boolean flag; //toggle for output;
 
     private StringBuilder output;
 
-    public FCFS() {
-        readyQueue = new QueueManager("src/main/resources/input");
+    private String outputFile;
+
+    public FCFS(String filename, String outputFile, boolean outputFlag) {
+        readyQueue = new QueueManager(filename);
         currentTime = 0;
         IOQueue = new LinkedList<>();
         idleTime = 0;
         completedList = new LinkedList<>();
         output = new StringBuilder();
+        this.outputFile = outputFile;
+        flag = outputFlag;
+        CPUProcess = null;
     }
-
 
 
     public void process(){
         if (readyQueue.getSize() == 0){
             throw new IllegalStateException("Queue is empty");
         }
-      //  CPUProcess = readyQueue.pop();
-      //  CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
-     //   System.out.printf(snapshot());
+        //  CPUProcess = readyQueue.pop();
+        //  CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
+        //   System.out.printf(snapshot());
         while (!isCompleted()){
-        //    System.out.println(snapshot());
+            //    System.out.println(snapshot());
 
             if (CPUProcess != null && currentTime >= CPUProcess.getEvictionTime()){
                 if (!CPUProcess.isOnLastBurst()) {
@@ -51,6 +57,7 @@ public class FCFS {
                     CPUProcess.advanceIterator();
                     IOQueue.add(CPUProcess);
                 }else{
+                    CPUProcess.setExitTime(currentTime);
                     completedList.add(CPUProcess);
                 }
 
@@ -62,6 +69,9 @@ public class FCFS {
 
             if (!readyQueue.isEmpty() && CPUProcess == null) {
                 CPUProcess = readyQueue.pop();
+                if (CPUProcess.getInitialCPUTime() == -1){
+                    CPUProcess.setInitialCPUTime(currentTime);
+                }
                 CPUProcess.setEvictionTime(currentTime + CPUProcess.getBurstTme());
 
                 if (flag) {
@@ -84,6 +94,7 @@ public class FCFS {
             String str = snapshot();
             System.out.println(str);
             output.append(str);
+            System.out.println(getMetrics());
         }
 
 
@@ -153,7 +164,61 @@ public class FCFS {
 
     }
 
+    public String getMetrics(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nFinished\n\n");
+        sb.append("Total Time:\t" + currentTime + "\n");
+        sb.append("CPU Utilization:\t" + ((currentTime - idleTime) / ((double)currentTime)) * 100).append("%") ;
 
+        List<Process> list = new LinkedList<>(completedList);
+        list.sort(Comparator.comparingInt(Process::getProcess_id));
+
+        sb.append("\n\nWaiting Time\t\t");
+
+        for (Process p : list){
+            sb.append(p.getStrName() + "\t\t");
+        }
+        sb.append("\n\t\t\t\t\t");
+        int totalWait = 0;
+        for (Process p1 : list ){
+            sb.append(p1.getWaitingTime() + "\t\t");
+            totalWait += p1.getWaitingTime();
+        }
+        sb.append("\nAverage Wait:\t\t" + ((double)totalWait) / list.size());
+
+        sb.append("\n\nTurnaround Time\t\t");
+        for (Process p1 : list){
+            sb.append(p1.getStrName() + "\t\t");
+        }
+        sb.append("\n\t\t\t\t\t");
+        int totalTurnaround = 0;
+        for (Process p : list){
+            sb.append(p.getTurnAroundTime() + "\t\t");
+            totalTurnaround += p.getTurnAroundTime();
+        }
+
+        sb.append("\nAverage Turnaround:\t" + ((double)totalTurnaround) / list.size());
+
+        sb.append("\n\nResponse Time\t\t");
+        for (Process p : list){
+            sb.append(p.getStrName() + "\t\t");
+        }
+        sb.append("\n\t\t\t\t\t");
+        int totalResponse = 0;
+        for (Process p : list){
+            sb.append(p.getResponseTime() + "\t\t");
+            totalResponse += p.getResponseTime();
+        }
+
+        sb.append("\nAverage Response:\t" + ((double)totalResponse) / list.size());
+
+        outputToFile(outputFile, sb);
+        return sb.toString();
+    }
+
+    public LinkedList<Process> getProcesses(){
+        return completedList;
+    }
 
     }
 
