@@ -43,3 +43,6 @@ The Multilevel Feedback Queue takes the idea used in the Multilevel Queue of bal
 | P6 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
 | P7 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
 | P8 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+
+#Discussion
+Discussion should be spent comparing algorithm performance and deciding on the best solution to implement. Why its the best solution and why not should also be discussed.
