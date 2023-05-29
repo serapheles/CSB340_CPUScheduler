@@ -17,6 +17,8 @@ The Multilevel Queue process scheduling algorithm combines multiple approaches i
 The Multilevel Feedback Queue takes the idea used in the Multilevel Queue of balancing approaches, but focuses on run time to prioritize shorter processes for Shortest Job First style efficiency, with any process that takes too long being given a lower priority. In the implementation here, this priority drop is permanent, though this certainly is not the universal implementation. Whether or not the higher priority queues actually use Round Robin is at some level a matter of perspective, but by downgrading the priority of a process after a set time, they functionally do. The lowest level queue is First Come, First Serve, though as with other scheduling methods that allow preemption, it risks starvation if there are too many quick processes or if a process periodically called IO to stay at a higher priority.
 
 
+##Averages
+
 |						|FCFS	|SJF	| Priority	|RR		|MLQ	|MLFQ	|
 |---					|---	|---	|---		|---	|---	|---	|
 |CPU Utilization		|85.34%	|100%	|			|		|82%	|91.4%	|
