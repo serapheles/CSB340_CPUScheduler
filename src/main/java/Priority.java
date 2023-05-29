@@ -19,6 +19,15 @@ public class Priority {
     private String outputFile;
     private int idleTime;
     private LinkedList<Process> completedList;
+
+
+    /**+
+     * Constructor for Priority
+     * @param filename file to read from
+     * @param outputFile file to write to
+     * @param outputFlag  flag to toggle output
+     * @param priorities array of priorities
+     */
     public Priority (String filename, String outputFile, boolean outputFlag, int[] priorities) {
         readyQueue = new PQueueManager(filename, priorities);
         this.outputFile = outputFile;
@@ -32,6 +41,10 @@ public class Priority {
     }
 
 
+    /**
+     * Checks if all processes are completed
+     *  true if all processes are completed
+     */
     public void process(){
         if (readyQueue.size() == 0){
             throw new IllegalStateException("Queue is empty");
@@ -92,10 +105,20 @@ public class Priority {
 
     }
 
+    /**
+     * isCompleted checks if all processes are completed
+     * @return true if all processes are completed false otherwise
+     */
+
     public boolean isCompleted(){
         return readyQueue.isEmpty() && IOQueue.isEmpty() && CPUProcess == null;
     }
 
+
+    /**
+     * processingIOQueue checks if any processes in the IO queue are ready to be moved to the ready queue
+     * if so, it moves them to the ready queue
+     */
     public void processingIOQueue(){
         Iterator<Process> iterator = IOQueue.iterator();
         while(iterator.hasNext()){
@@ -110,6 +133,11 @@ public class Priority {
         }
     }
 
+    /**
+     * snapshot creates a snapshot of the current state of the system
+     * and displays it to the console
+     * @return a string representation of the current state of the system
+     */
     public String snapshot(){
         StringBuilder sb = new StringBuilder();
         sb.append("Current Time: " + currentTime);
@@ -142,6 +170,11 @@ public class Priority {
         return sb.toString();
     }
 
+    /**
+     * outputToFile outputs the string representation of the current state of the system to a file
+     * @param filename name of the file to write to
+     * @param sb string representation of the current state of the system
+     */
     public void outputToFile(String filename, StringBuilder sb) {
         if (flag == false){
             return;
@@ -163,6 +196,11 @@ public class Priority {
 
     }
 
+    /**
+     * getMetrics method calculates the metrics of the RR and
+     * prints all values to the console
+     * @return metrics of the Priority algorithm
+     */
     public String getMetrics(){
         StringBuilder sb = new StringBuilder();
         sb.append("\nFinished\n\n");
@@ -214,6 +252,11 @@ public class Priority {
         outputToFile(outputFile, sb);
         return sb.toString();
     }
+
+    /**
+     * getProcesses method returns the list of processes
+     * @return list of processes
+     */
 
     public LinkedList<Process> getProcesses(){
         return completedList;
