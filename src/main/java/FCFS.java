@@ -88,9 +88,9 @@ public class FCFS {
             currentTime++;
         }
 
-
+        currentTime--;
         if (flag) {
-            currentTime--;
+
             String str = snapshot();
             System.out.println(str);
             output.append(str);
