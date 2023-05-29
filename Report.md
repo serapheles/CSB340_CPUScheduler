@@ -31,9 +31,15 @@ The Multilevel Feedback Queue takes the idea used in the Multilevel Queue of bal
 |AVG Response Time		|24.37	|29.5	|	72.0		|	45.88	|39.25	|15.75	|
 
 
-|						|FCFS	CPU utilization: |SJF	CPU utilization: | Priority CPU utilization: 	|RR CPU utilization: |MLQ	CPU utilization: |MLFQ CPU utilization: 	|
-|---					|tw|---	|---		|---	|---	|---	|
-|CPU Utilization		|85.34%	|100%	|			|		|82%	|91.4%	|
-|Avg Waiting Time		|185.25	|124.88	|			|		|261.38	|156.88	|
-|Avg Turnaround Time	|521.37	|461	|			|		|597.5	|493	|
-|AVG Response Time		|24.37	|29.5	|			|		|39.25	|15.75	|
+|    | FCFS |     |    | Priority |     |    | Round Robin |     |    | SJF  |     |    | MLQ  |     |    | MLFQ |     |    |
+|----|------|-----|----|----------|-----|----|-------------|-----|----|------|-----|----|------|-----|----|------|-----|----|
+|    | CPU  |     |    | CPU:     |     |    | CPU:        |     |    | CPU: |     |    | CPU: |     |    | CPU: |     |    |
+|    | Tw   | Ttr | Tr | Tw       | Ttr | Tr | Tw          | Ttr | Tr | Tw   | Ttr | Tr | Tw   | Ttr | Tr | Tw   | Ttr | Tr |
+| P1 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+| P2 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+| P3 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+| P4 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+| P5 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+| P6 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+| P7 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
+| P8 |      |     |    |          |     |    |             |     |    |      |     |    |      |     |    |      |     |    |
