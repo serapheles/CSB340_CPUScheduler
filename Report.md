@@ -37,7 +37,7 @@ The Multilevel Feedback Queue takes the idea used in the Multilevel Queue of bal
 
 |    | FCFS |     |    | Priority |     |    | Round Robin |     |    | SJF  |     |    | MLQ  |     |    | MLFQ |     |    |
 |----|------|-----|----|----------|-----|----|-------------|-----|----|------|-----|----|------|-----|----|------|-----|----|
-|    | CPU  |     |    | CPU:     |     |    | CPU:        |     |    | CPU: |     |    | CPU: |     |    | CPU: |     |    |
+|    | CPU 85:34%  |     |    | CPU:  78.01%   |     |    | CPU: 93.87%	       |     |    | CPU:100%	 |     |    | CPU:82%	 |     |    | CPU: 91.4%|     |    |
 |    | Tw   | Ttr | Tr | Tw       | Ttr | Tr | Tw          | Ttr | Tr | Tw   | Ttr | Tr | Tw   | Ttr | Tr | Tw   | Ttr | Tr |
 | P1 |  170 | 395 | 0  |   106    | 331 | 27 |      144    | 369 | 0  |  26  | 251 | 11 |  68  | 293 |  0 |  63  | 288 | 0  |
 | P2 |  164 | 591 | 5  |   233    | 660 | 70 |      187    | 614 | 5  |  46  | 473 | 3  |  409 | 836 | 35 |  145 | 572 | 5  |
