@@ -10,6 +10,8 @@ Shortest Job First process scheduling algorithms, particularly the preemptive ve
 ##Priority Scheduling
 
 ##Round Robin
+Round Robin provides process an equal amount of CPU time. It operates on the principale of preemption, where process are temporarly interrupted and moved to the back of the queue after executing for a fixed time quantum. Round Robin is suitable ofr time-sharing systems and interactive enviroments, as it reduces latency and allows for quick context switching between processes. Round Robin can introduce overhead and inefficiencies when dealing with tasks of varying execution times, leading to potential performance degradation. 
+
 
 ##Multilevel Queue
 The Multilevel Queue process scheduling algorithm combines multiple approaches in order to try and balance the pros and cons of different methods. In particular, it attempts to balance the fairness of methods like Round Robin with an increased responsiveness for higher priority processes, such as kernel and real time processes. However, the particular implementation here uses the Fixed Priority Preemptive Scheduling Method, which can lead to starvation of lower priority processes.
