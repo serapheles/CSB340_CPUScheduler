@@ -94,14 +94,4 @@ class FCFSTest {
 
     }
 
-    @Test
-    void testCPUUtilization() {
-        String inputFile = "src/main/resources/input";
-        FCFS f1 = new FCFS(inputFile, "FCFS_output", false);
-        f1.process();
-        LinkedList<Process> list = f1.getProcesses();
-        // sb.append("CPU Utilization:\t" + ((currentTime - idleTime) / ((double)currentTime)) * 100).append("%")
-
-
-    }
 }
