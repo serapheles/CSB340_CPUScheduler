@@ -30,6 +30,7 @@ The Multilevel Feedback Queue takes the idea used in the Multilevel Queue of bal
 |Avg Turnaround Time	|521.37	|461	|	533.80		|	563.88	|597.5	|493	|
 |AVG Response Time		|24.37	|29.5	|	72.0		|	45.88	|39.25	|15.75	|
 
+## Indivudal Process Performance
 
 |    | FCFS |     |    | Priority |     |    | Round Robin |     |    | SJF  |     |    | MLQ  |     |    | MLFQ |     |    |
 |----|------|-----|----|----------|-----|----|-------------|-----|----|------|-----|----|------|-----|----|------|-----|----|
