@@ -132,6 +132,10 @@ public class Priority {
                 sb.append(ioProcess.getStrName() + "\t" + ioProcess.getIOTime() + "\n");
             }
         }
+        sb.append("\n---------------------------------------------------------\n");
+        for (Process completedProcess : completedList){
+            sb.append(completedProcess.getStrName() + "\t");
+        }
 
         sb.append("\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
         outputToFile(outputFile, sb);
