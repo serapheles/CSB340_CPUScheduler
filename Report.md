@@ -28,7 +28,7 @@ The Multilevel Feedback Queue takes the idea used in the Multilevel Queue of bal
 |AVG Response Time		|24.37	|29.5	|			|		|39.25	|15.75	|
 
 
-|						|FCFS	 CPU utilization: |SJF	| Priority	|RR		|MLQ	|MLFQ	|
+|						|FCFS	 CPU utilization: |SJF	CPU utilization: | Priority CPU utilization: 	|RR CPU utilization: |MLQ	CPU utilization: |MLFQ CPU utilization: 	|
 |---					|---	|---	|---		|---	|---	|---	|
 |CPU Utilization		|85.34%	|100%	|			|		|82%	|91.4%	|
 |Avg Waiting Time		|185.25	|124.88	|			|		|261.38	|156.88	|
