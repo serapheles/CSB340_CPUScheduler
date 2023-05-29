@@ -23,6 +23,7 @@ public class MLQ extends Multilevel {
         }
         tick();
         finalReport();
+        report(text);
     }
 
     private void tick() {
@@ -46,6 +47,11 @@ public class MLQ extends Multilevel {
                     lastQueue = -1;
                     timeElapsed++;
                     continue;
+                }
+                if (++clock == 4) {
+                    priorityHigh.add(priorityHigh.remove());
+                    clock = 0;
+                    lastQueue = -1;
                 }
             } else if (!priorityLow.isEmpty()) {
                 if (lastQueue != 1) {
