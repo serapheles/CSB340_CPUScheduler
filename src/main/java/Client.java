@@ -14,7 +14,9 @@ public class Client {
 //        RR r1 = new RR(inputFile, "RR_output", outputYes);
 //        r1.process();
 //
-
+        MLQ mq = new MLQ();
+      //  MLFQ ml = new MLFQ();
+       //  SJF s1 = new SJF();
 
 
 
