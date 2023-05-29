@@ -1,5 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 
 public abstract class Multilevel {
@@ -7,37 +6,33 @@ public abstract class Multilevel {
     protected final ArrayDeque<Job> readyQueue;
     //Technically this is a sorted collection, but the optimizations that take advantage of that aren't worth it for
     //this assignment.
-    protected final TreeMap<Job, ArrayDeque<Job>> ioJobs;
+    protected final TreeMap<Job, Queue<Job>> ioJobs;
     protected final ArrayList<Job> allJobs;
     protected final boolean output = true;
     protected int timeElapsed;
     protected int ioOnly;
+    protected StringBuilder text;
 
     public Multilevel() {
         readyQueue = open_processes();
         allJobs = new ArrayList<>(readyQueue);
-        ioJobs = new TreeMap<Job, ArrayDeque<Job>>(Comparator.comparingInt(Job::checkNextIOBurst).thenComparingInt(Job::getPriority));
-
+        ioJobs = new TreeMap<Job, Queue<Job>>(Comparator.comparingInt(Job::checkNextIOBurst).thenComparingInt(Job::getPriority));
+        text = new StringBuilder();
     }
 
-    protected void updateIO(){
-        if (!ioJobs.isEmpty()) {
-            Job tempJob;
-            Iterator<Map.Entry<Job, ArrayDeque<Job>>> it = ioJobs.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry<Job, ArrayDeque<Job>> mapping = it.next();
-                tempJob = mapping.getKey();
-                Integer timeRemaining = tempJob.decrementIOBurst();
-                if (timeRemaining == null || timeRemaining < 0) {
-                    throw new RuntimeException();
-                }
-                if (timeRemaining == 0) {
-                    mapping.getKey().getNextIOBurst();
-                    mapping.getValue().add(mapping.getKey());
-                    it.remove();
-
-                }
-            }
+    /*
+        Adapted from digitalocean.com.
+     */
+    public void report(StringBuilder text){
+        File file = new File("Output.txt");
+        try {
+            FileWriter writer = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.write(String.valueOf(text));
+            bufferedWriter.close();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -96,11 +91,32 @@ public abstract class Multilevel {
         return null;
     }
 
+    protected void updateIO() {
+        if (!ioJobs.isEmpty()) {
+            Job tempJob;
+            Iterator<Map.Entry<Job, Queue<Job>>> it = ioJobs.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<Job, Queue<Job>> mapping = it.next();
+                tempJob = mapping.getKey();
+                Integer timeRemaining = tempJob.decrementIOBurst();
+                if (timeRemaining == null || timeRemaining < 0) {
+                    throw new RuntimeException();
+                }
+                if (timeRemaining == 0) {
+                    mapping.getKey().getNextIOBurst();
+                    mapping.getValue().add(mapping.getKey());
+                    it.remove();
+
+                }
+            }
+        }
+    }
+
     protected double getRatio() {
         return (1.0 - ((double) ioOnly / (double) timeElapsed)) * 100.0;
     }
 
-    protected void checkIfFirstResponse(Job job){
+    protected void checkIfFirstResponse(Job job) {
         if (job.getResponseTime() == -1) {
             job.setResponseTime(timeElapsed);
         }
@@ -112,17 +128,15 @@ public abstract class Multilevel {
      * @param currentJob The currently running process.
      */
     protected void displayStatus(Job currentJob) {
-        StringBuilder text = new StringBuilder();
         text.append("Total elapsed time: ").append(timeElapsed).append("\n");
         text.append("Currently running process: ").append(currentJob.getProcessId()).append("\n");
         text.append("Processes in I/O:\n");
         for (Job tempJob : ioJobs.keySet()) {
             text.append(tempJob.getProcessId()).append(", remaining time: ").append(tempJob.checkNextIOBurst()).append("\n\n");
         }
-        System.out.println(text);
     }
 
-    protected void updateWaitTimes(Job currentJob, ArrayDeque<Job> queue){
+    protected void updateWaitTimes(Job currentJob, Collection<Job> queue) {
         for (Job j : queue) {
             if (j.equals(currentJob)) {
                 continue;
@@ -131,12 +145,9 @@ public abstract class Multilevel {
         }
     }
 
-    protected void finalReport(){
-        System.out.println(readyQueue);
-        System.out.println(allJobs);
-
-        System.out.println("Total time elapsed: " + timeElapsed + "\n");
-        System.out.printf("Cpu utilization: %.2f\n", getRatio());
+    protected void finalReport() {
+        text.append("Total time elapsed: ").append(timeElapsed).append("\n");
+        text.append("Cpu utilization: ").append(getRatio()).append("\n");
         int totalWait = 0;
         int totalTurnaround = 0;
         int totalResponse = 0;
@@ -144,14 +155,14 @@ public abstract class Multilevel {
             totalWait += j.getWaitTime();
             totalTurnaround += (j.getWaitTime() + j.getNeededCPUTime() + j.getNeededIOTime());
             totalResponse += j.getResponseTime();
-            System.out.println("Process " + j.getProcessId() + ":");
-            System.out.println("Wait time: " + j.getWaitTime());
-            System.out.println("Turnaround: " + (j.getWaitTime() + j.getNeededCPUTime() + j.getNeededIOTime()));
-            System.out.println("Response: " + j.getResponseTime() + "\n");
+            text.append("Process ").append(j.getProcessId()).append(":").append("\n");
+            text.append("Wait time: ").append(j.getWaitTime()).append("\n");
+            text.append("Turnaround: ").append(j.getWaitTime() + j.getNeededCPUTime() + j.getNeededIOTime()).append("\n");
+            text.append("Response: ").append(j.getResponseTime()).append("\n").append("\n");
         }
-        System.out.printf("Average wait time: %.2f\n", (double) totalWait / (double) readyQueue.size());
-        System.out.printf("Average turnaround: %.2f\n", (double) totalTurnaround / (double) readyQueue.size());
-        System.out.printf("Average response time: %.2f\n", (double) totalResponse / (double) readyQueue.size());
+        text.append("Average wait time: ").append((double) totalWait / (double) readyQueue.size()).append("\n");
+        text.append("Average turnaround: ").append((double) totalTurnaround / (double) readyQueue.size()).append("\n");
+        text.append("Average response time: ").append((double) totalResponse / (double) readyQueue.size()).append("\n");
     }
 
     /**
@@ -160,7 +171,7 @@ public abstract class Multilevel {
      * @param queue The current queue.
      * @return Effectively, if the process yields priority.
      */
-    protected boolean tock(ArrayDeque<Job> queue) {
+    protected boolean tock(Queue<Job> queue) {
         Integer time = queue.peek().decrementCpuBurst();
         if (time == null || time < 0) {
             System.out.println("Process id: " + queue.peek().getProcessId());
@@ -170,7 +181,7 @@ public abstract class Multilevel {
         }
         //Refactor this later, in the magical world where there is time.
         if (time == 0) {
-            System.out.println("Burst complete for process: " + queue.peek().getProcessId());
+            text.append("Burst complete for process: ").append(queue.peek().getProcessId()).append("\n");
             queue.peek().getNextCpuBurst();
             //need to remove the value from the job's time
             if (queue.peek().checkNextIOBurst() == null) {
@@ -180,10 +191,10 @@ public abstract class Multilevel {
                 allJobs.remove(tempJob);
                 readyQueue.add(tempJob);
                 if (output) {
-                    System.out.println("Process complete: " + tempJob.getProcessId());
+                    text.append("Process complete: ").append(tempJob.getProcessId()).append("\n");
                 }
             } else {
-                System.out.println("Adding to IO: " + queue.peek().getProcessId());
+                text.append("Adding to IO: ").append(queue.peek().getProcessId()).append("\n");
                 ioJobs.put(queue.remove(), queue);
             }
             return true;

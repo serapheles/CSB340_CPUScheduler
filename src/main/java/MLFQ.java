@@ -23,6 +23,7 @@ public class MLFQ extends Multilevel {
 
         tick();
         finalReport();
+        report(text);
     }
 
     public static void main(String[] args) {

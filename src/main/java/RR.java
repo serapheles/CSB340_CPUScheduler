@@ -15,24 +15,28 @@ public class RR {
 
     private Process CPUProcess;
 
-    private List<Process> completedList;
+    private LinkedList<Process> completedList;
 
     private int idleTime = 0;
 
     private boolean flag = true; //toggle for output;
 
     private StringBuilder output;
+    private String outputFile;
+
 
     private int quanta;
 
-    public RR() {
-        readyQueue = new QueueManager("src/main/resources/input");
+    public RR(String filename, String outputFile, boolean outputFlag) {
+        readyQueue = new QueueManager(filename);
         currentTime = 0;
         IOQueue = new LinkedList<>();
         idleTime = 0;
         completedList = new LinkedList<>();
         output = new StringBuilder();
         quanta =5;
+        this.flag = outputFlag;
+        this.outputFile = outputFile;
     }
 
 
@@ -47,6 +51,10 @@ public class RR {
             if (CPUProcess == null){
                 if (!readyQueue.isEmpty()){
                     CPUProcess = readyQueue.pop();
+                    if (CPUProcess.getInitialCPUTime() == -1) {
+                        CPUProcess.setInitialCPUTime(currentTime);
+                    }
+                    System.out.println(snapshot());
                 }
 
             }else if (CPUProcess.getBurstTme() == 0){
@@ -55,12 +63,18 @@ public class RR {
                     CPUProcess = null;
                     quanta = 0;
                 }else{
+                    CPUProcess.setExitTime(currentTime);
+                    completedList.add(CPUProcess);
                     CPUProcess = null;
                     quanta = 0;
                 }
                 if (!readyQueue.isEmpty()){
                     CPUProcess = readyQueue.pop();
                     quanta = 5;
+                    if (CPUProcess.getInitialCPUTime() == -1) {
+                        CPUProcess.setInitialCPUTime(currentTime);
+                    }
+                    System.out.println(snapshot());
                 }
             }else if (quanta <= 0){
                 readyQueue.push(CPUProcess);
@@ -69,16 +83,29 @@ public class RR {
                 if (!readyQueue.isEmpty()){
                     CPUProcess = readyQueue.pop();
                     quanta = 5;
+                    if (CPUProcess.getInitialCPUTime() == -1) {
+                        CPUProcess.setInitialCPUTime(currentTime);
+                    }
                 }
+
+                System.out.println(snapshot());
+
             }
-            System.out.println(snapshot());
+            //System.out.println(snapshot());
             processingIOQueue();
             if (CPUProcess != null) {
                 CPUProcess.setBurstTme(CPUProcess.getBurstTme() - 1);
                 quanta--;
+            }else{
+                idleTime++;
             }
             currentTime++;
         }
+
+        String str = snapshot();
+        System.out.println(str);
+        System.out.println(getMetrics());
+
 
     }
 
@@ -124,12 +151,20 @@ public class RR {
             }
         }
 
-        sb.append("\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
+        sb.append("\n---------------------------------------------------------\n");
+        for (Process completedProcess : completedList){
+            sb.append(completedProcess.getStrName() + "\t");
+        }
 
+        sb.append("\n\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
+        outputToFile(outputFile, sb);
         return sb.toString();
     }
 
     public void outputToFile(String filename, StringBuilder sb) {
+        if (!flag) {
+            return;
+        }
         FileWriter fileWriter = null;
         try {
             File file = new File(filename);
@@ -146,9 +181,67 @@ public class RR {
 
     }
 
+    public String getMetrics(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nFinished\n\n");
+        sb.append("Total Time:\t" + currentTime + "\n");
+        sb.append("CPU Utilization:\t" + ((currentTime - idleTime) / ((double)currentTime)) * 100).append("%") ;
 
+        List<Process> list = new LinkedList<>(completedList);
+        list.sort(Comparator.comparingInt(Process::getProcess_id));
+
+        sb.append("\n\nWaiting Time\t\t");
+
+        for (Process p : list){
+            sb.append(p.getStrName() + "\t\t");
+        }
+        sb.append("\n\t\t\t\t\t");
+        int totalWait = 0;
+        for (Process p1 : list ){
+            sb.append(p1.getWaitingTime() + "\t\t");
+            totalWait += p1.getWaitingTime();
+        }
+        sb.append("\nAverage Wait:\t\t" + ((double)totalWait) / list.size());
+
+        sb.append("\n\nTurnaround Time\t\t");
+        for (Process p1 : list){
+            sb.append(p1.getStrName() + "\t\t");
+        }
+        sb.append("\n\t\t\t\t\t");
+        int totalTurnaround = 0;
+        for (Process p : list){
+            sb.append(p.getTurnAroundTime() + "\t\t");
+            totalTurnaround += p.getTurnAroundTime();
+        }
+
+        sb.append("\nAverage Turnaround:\t" + ((double)totalTurnaround) / list.size());
+
+        sb.append("\n\nResponse Time\t\t");
+        for (Process p : list){
+            sb.append(p.getStrName() + "\t\t");
+        }
+        sb.append("\n\t\t\t\t\t");
+        int totalResponse = 0;
+        for (Process p : list){
+            sb.append(p.getResponseTime() + "\t\t");
+            totalResponse += p.getResponseTime();
+        }
+
+        sb.append("\nAverage Response:\t" + ((double)totalResponse) / list.size());
+
+        outputToFile(outputFile, sb);
+        return sb.toString();
+    }
+
+    public LinkedList<Process> getProcesses(){
+        return completedList;
+    }
 
 }
+
+
+
+
 
 
 
