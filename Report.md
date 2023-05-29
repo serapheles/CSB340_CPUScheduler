@@ -50,3 +50,17 @@ The Multilevel Feedback Queue takes the idea used in the Multilevel Queue of bal
 
 ## Discussion
 Discussion should be spent comparing algorithm performance and deciding on the best solution to implement. Why its the best solution and why not should also be discussed.
+
+There are 6 different algorithms presented here for scheduling CPU tasks, each with different pros and cons. One of the strongest criteria for determine which is "best" algorithm is CPU utilization; we want to keep CPU being utilized to maximum extent possible, so CPU is not sitting in idle. In this critera, Short Job First has highest CPU utilization; this does have the disadvantage of favoring short processing, and may leads to starvation of longer but important processes. 
+
+Another critera we want to use measure a scheduling process is fairness of CPU time allocation. For example, it may make sense to give all the process close to equal allocation of CPU time as to improve user experience (no one wants a process that lags and stalls). In this regard, Round Robin makes a lot of sense, and CPU utilization is pretty high.  We also need to make quanta is selected optimally as too many context switchs has a cost. 
+
+Because not all processes are equal in priority, a priority-based CPU scheduling algorithm make sense in case where we want to prioritize a certain tasks. This can also based memory usage or improtance in user experience.
+
+First Come First Serve is simplistic and easy to implement, but it is not necessary fair in CPU time allocation as some processes are waiting for a while.
+
+Multilevel Queues and Multilevel Feedback Queues have pretty good performance across the board, but not very much superior to other processes. It is interesting that MLFQ has lowest average response time, which may be important for user experience.
+
+Overall, if most processes are about the same in improtant in applications, Short Job First algorithms seems perform the best as it has CPU utilization and shortest in waiting time.
+
+
