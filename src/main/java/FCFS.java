@@ -27,6 +27,13 @@ public class FCFS {
 
     private String outputFile;
 
+    /**
+     * Constructor for FCFS
+     * @param filename file to read from
+     * @param outputFile file to write to
+     * @param outputFlag flag to toggle output
+     */
+
     public FCFS(String filename, String outputFile, boolean outputFlag) {
         readyQueue = new QueueManager(filename);
         currentTime = 0;
@@ -39,6 +46,11 @@ public class FCFS {
         CPUProcess = null;
     }
 
+
+    /**
+     * Checks if all processes are completed
+     * true if all processes are completed otherwise false
+     */
 
     public void process(){
         if (readyQueue.getSize() == 0){
@@ -100,10 +112,19 @@ public class FCFS {
 
     }
 
+    /**
+     * isCompleted checks if all processes are completed
+     * @return true if all processes are completed otherwise false
+     */
     public boolean isCompleted(){
         return readyQueue.isEmpty() && IOQueue.isEmpty() && CPUProcess == null;
     }
 
+
+    /**
+     * processingIOQueue checks if any processes in the IO queue are ready to be moved to the ready queue
+     * if so, it moves them to the ready queue
+     */
     public void processingIOQueue(){
         Iterator<Process> iterator = IOQueue.iterator();
         while(iterator.hasNext()){
@@ -115,6 +136,12 @@ public class FCFS {
         }
     }
 
+
+    /**
+     * snapshot returns a string representation of the current state of the system
+     * and displays it to the console
+     * @return string representation of the current state of the system
+     */
     public String snapshot(){
         StringBuilder sb = new StringBuilder();
         sb.append("Current Time: " + currentTime);
@@ -147,6 +174,11 @@ public class FCFS {
         return sb.toString();
     }
 
+    /**
+     * outputToFile outputs the string to the file
+     * @param filename name of the file to write to
+     * @param sb string to write to the file
+     */
     public void outputToFile(String filename, StringBuilder sb) {
         FileWriter fileWriter = null;
         try {
@@ -164,6 +196,11 @@ public class FCFS {
 
     }
 
+    /**
+     * getMetrics method calculates the metrics of the RR and
+     * prints all values to the console
+     * @return metrics of the FCFS
+     */
     public String getMetrics(){
         StringBuilder sb = new StringBuilder();
         sb.append("\nFinished\n\n");
@@ -216,6 +253,10 @@ public class FCFS {
         return sb.toString();
     }
 
+    /**
+     * getProcesses returns the list of processes
+     * @return list of processes
+     */
     public LinkedList<Process> getProcesses(){
         return completedList;
     }

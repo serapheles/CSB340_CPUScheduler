@@ -1,0 +1,1320 @@
+Total elapsed time: 4
+Currently running process: 4
+Processes in I/O:
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 7
+Currently running process: 5
+Processes in I/O:
+4, remaining time: 34
+
+Total elapsed time: 11
+Currently running process: 6
+Processes in I/O:
+4, remaining time: 30
+
+Total elapsed time: 15
+Currently running process: 1
+Processes in I/O:
+4, remaining time: 26
+
+Burst complete for process: 1
+Adding to IO: 1
+Total elapsed time: 16
+Currently running process: 5
+Processes in I/O:
+4, remaining time: 25
+
+1, remaining time: 26
+
+Total elapsed time: 20
+Currently running process: 6
+Processes in I/O:
+4, remaining time: 21
+
+1, remaining time: 22
+
+Total elapsed time: 24
+Currently running process: 5
+Processes in I/O:
+4, remaining time: 17
+
+1, remaining time: 18
+
+Total elapsed time: 28
+Currently running process: 6
+Processes in I/O:
+4, remaining time: 13
+
+1, remaining time: 14
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 31
+Currently running process: 5
+Processes in I/O:
+4, remaining time: 10
+
+1, remaining time: 11
+
+6, remaining time: 21
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 35
+Currently running process: 2
+Processes in I/O:
+4, remaining time: 6
+
+1, remaining time: 7
+
+6, remaining time: 17
+
+5, remaining time: 23
+
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 39
+Currently running process: 3
+Processes in I/O:
+4, remaining time: 2
+
+1, remaining time: 3
+
+6, remaining time: 13
+
+5, remaining time: 19
+
+2, remaining time: 47
+
+Total elapsed time: 41
+Currently running process: 4
+Processes in I/O:
+1, remaining time: 1
+
+6, remaining time: 11
+
+5, remaining time: 17
+
+2, remaining time: 45
+
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 45
+Currently running process: 1
+Processes in I/O:
+6, remaining time: 7
+
+5, remaining time: 13
+
+4, remaining time: 40
+
+2, remaining time: 41
+
+Burst complete for process: 1
+Adding to IO: 1
+Total elapsed time: 48
+Currently running process: 3
+Processes in I/O:
+6, remaining time: 4
+
+5, remaining time: 10
+
+1, remaining time: 30
+
+4, remaining time: 37
+
+2, remaining time: 38
+
+Total elapsed time: 52
+Currently running process: 6
+Processes in I/O:
+5, remaining time: 6
+
+1, remaining time: 26
+
+4, remaining time: 33
+
+2, remaining time: 34
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 56
+Currently running process: 3
+Processes in I/O:
+5, remaining time: 2
+
+6, remaining time: 7
+
+1, remaining time: 22
+
+4, remaining time: 29
+
+2, remaining time: 30
+
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 58
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 5
+
+1, remaining time: 20
+
+4, remaining time: 27
+
+2, remaining time: 28
+
+3, remaining time: 32
+
+Total elapsed time: 62
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 1
+
+1, remaining time: 16
+
+4, remaining time: 23
+
+2, remaining time: 24
+
+3, remaining time: 28
+
+Total elapsed time: 66
+Currently running process: 6
+Processes in I/O:
+1, remaining time: 12
+
+4, remaining time: 19
+
+2, remaining time: 20
+
+3, remaining time: 24
+
+Total elapsed time: 70
+Currently running process: 5
+Processes in I/O:
+1, remaining time: 8
+
+4, remaining time: 15
+
+2, remaining time: 16
+
+3, remaining time: 20
+
+Total elapsed time: 74
+Currently running process: 6
+Processes in I/O:
+1, remaining time: 4
+
+4, remaining time: 11
+
+2, remaining time: 12
+
+3, remaining time: 16
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 75
+Currently running process: 5
+Processes in I/O:
+1, remaining time: 3
+
+6, remaining time: 9
+
+4, remaining time: 10
+
+2, remaining time: 11
+
+3, remaining time: 15
+
+Total elapsed time: 79
+Currently running process: 1
+Processes in I/O:
+6, remaining time: 5
+
+4, remaining time: 6
+
+2, remaining time: 7
+
+3, remaining time: 11
+
+Total elapsed time: 83
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 1
+
+4, remaining time: 2
+
+2, remaining time: 3
+
+3, remaining time: 7
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 84
+Currently running process: 1
+Processes in I/O:
+4, remaining time: 1
+
+2, remaining time: 2
+
+3, remaining time: 6
+
+5, remaining time: 20
+
+Burst complete for process: 1
+Adding to IO: 1
+Total elapsed time: 85
+Currently running process: 6
+Processes in I/O:
+2, remaining time: 1
+
+3, remaining time: 5
+
+5, remaining time: 19
+
+1, remaining time: 42
+
+Total elapsed time: 89
+Currently running process: 4
+Processes in I/O:
+3, remaining time: 1
+
+5, remaining time: 15
+
+1, remaining time: 38
+
+Total elapsed time: 93
+Currently running process: 6
+Processes in I/O:
+5, remaining time: 11
+
+1, remaining time: 34
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 95
+Currently running process: 4
+Processes in I/O:
+5, remaining time: 9
+
+6, remaining time: 11
+
+1, remaining time: 32
+
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 96
+Currently running process: 7
+Processes in I/O:
+5, remaining time: 8
+
+6, remaining time: 10
+
+1, remaining time: 31
+
+4, remaining time: 44
+
+Total elapsed time: 104
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 2
+
+1, remaining time: 23
+
+4, remaining time: 36
+
+Total elapsed time: 108
+Currently running process: 6
+Processes in I/O:
+1, remaining time: 19
+
+4, remaining time: 32
+
+Total elapsed time: 112
+Currently running process: 5
+Processes in I/O:
+1, remaining time: 15
+
+4, remaining time: 28
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 113
+Currently running process: 6
+Processes in I/O:
+1, remaining time: 14
+
+4, remaining time: 27
+
+5, remaining time: 35
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 116
+Currently running process: 7
+Processes in I/O:
+1, remaining time: 11
+
+6, remaining time: 13
+
+4, remaining time: 24
+
+5, remaining time: 32
+
+Burst complete for process: 7
+Adding to IO: 7
+Total elapsed time: 122
+Currently running process: 8
+Processes in I/O:
+1, remaining time: 5
+
+6, remaining time: 7
+
+4, remaining time: 18
+
+5, remaining time: 26
+
+7, remaining time: 45
+
+Burst complete for process: 8
+Adding to IO: 8
+Total elapsed time: 126
+Currently running process: 2
+Processes in I/O:
+1, remaining time: 1
+
+6, remaining time: 3
+
+8, remaining time: 13
+
+4, remaining time: 14
+
+5, remaining time: 22
+
+7, remaining time: 41
+
+Total elapsed time: 127
+Currently running process: 1
+Processes in I/O:
+6, remaining time: 2
+
+8, remaining time: 12
+
+4, remaining time: 13
+
+5, remaining time: 21
+
+7, remaining time: 40
+
+Burst complete for process: 1
+Adding to IO: 1
+Total elapsed time: 131
+Currently running process: 6
+Processes in I/O:
+8, remaining time: 8
+
+4, remaining time: 9
+
+5, remaining time: 17
+
+1, remaining time: 17
+
+7, remaining time: 36
+
+Total elapsed time: 135
+Currently running process: 6
+Processes in I/O:
+8, remaining time: 4
+
+4, remaining time: 5
+
+5, remaining time: 13
+
+1, remaining time: 13
+
+7, remaining time: 32
+
+Total elapsed time: 139
+Currently running process: 6
+Processes in I/O:
+4, remaining time: 1
+
+5, remaining time: 9
+
+1, remaining time: 9
+
+7, remaining time: 28
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 140
+Currently running process: 4
+Processes in I/O:
+5, remaining time: 8
+
+1, remaining time: 8
+
+6, remaining time: 17
+
+7, remaining time: 27
+
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 143
+Currently running process: 2
+Processes in I/O:
+5, remaining time: 5
+
+1, remaining time: 5
+
+6, remaining time: 14
+
+7, remaining time: 24
+
+4, remaining time: 50
+
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 147
+Currently running process: 3
+Processes in I/O:
+5, remaining time: 1
+
+1, remaining time: 1
+
+6, remaining time: 10
+
+7, remaining time: 20
+
+2, remaining time: 43
+
+4, remaining time: 46
+
+Total elapsed time: 148
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 9
+
+7, remaining time: 19
+
+2, remaining time: 42
+
+4, remaining time: 45
+
+Total elapsed time: 152
+Currently running process: 1
+Processes in I/O:
+6, remaining time: 5
+
+7, remaining time: 15
+
+2, remaining time: 38
+
+4, remaining time: 41
+
+Total elapsed time: 156
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 1
+
+7, remaining time: 11
+
+2, remaining time: 34
+
+4, remaining time: 37
+
+Total elapsed time: 160
+Currently running process: 1
+Processes in I/O:
+7, remaining time: 7
+
+2, remaining time: 30
+
+4, remaining time: 33
+
+Burst complete for process: 1
+Adding to IO: 1
+Total elapsed time: 162
+Currently running process: 6
+Processes in I/O:
+7, remaining time: 5
+
+1, remaining time: 21
+
+2, remaining time: 28
+
+4, remaining time: 31
+
+Total elapsed time: 166
+Currently running process: 5
+Processes in I/O:
+7, remaining time: 1
+
+1, remaining time: 17
+
+2, remaining time: 24
+
+4, remaining time: 27
+
+Total elapsed time: 170
+Currently running process: 6
+Processes in I/O:
+1, remaining time: 13
+
+2, remaining time: 20
+
+4, remaining time: 23
+
+Total elapsed time: 174
+Currently running process: 5
+Processes in I/O:
+1, remaining time: 9
+
+2, remaining time: 16
+
+4, remaining time: 19
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 178
+Currently running process: 6
+Processes in I/O:
+1, remaining time: 5
+
+2, remaining time: 12
+
+4, remaining time: 15
+
+5, remaining time: 25
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 182
+Currently running process: 3
+Processes in I/O:
+1, remaining time: 1
+
+2, remaining time: 8
+
+4, remaining time: 11
+
+5, remaining time: 21
+
+6, remaining time: 23
+
+Total elapsed time: 183
+Currently running process: 1
+Processes in I/O:
+2, remaining time: 7
+
+4, remaining time: 10
+
+5, remaining time: 20
+
+6, remaining time: 22
+
+Burst complete for process: 1
+Adding to IO: 1
+Total elapsed time: 187
+Currently running process: 3
+Processes in I/O:
+2, remaining time: 3
+
+4, remaining time: 6
+
+5, remaining time: 16
+
+6, remaining time: 18
+
+1, remaining time: 25
+
+Total elapsed time: 193
+Currently running process: 4
+Processes in I/O:
+5, remaining time: 10
+
+6, remaining time: 12
+
+1, remaining time: 19
+
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 197
+Currently running process: 3
+Processes in I/O:
+5, remaining time: 6
+
+6, remaining time: 8
+
+1, remaining time: 15
+
+4, remaining time: 60
+
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 201
+Currently running process: 8
+Processes in I/O:
+5, remaining time: 2
+
+6, remaining time: 4
+
+1, remaining time: 11
+
+3, remaining time: 40
+
+4, remaining time: 56
+
+Total elapsed time: 203
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 2
+
+1, remaining time: 9
+
+3, remaining time: 38
+
+4, remaining time: 54
+
+Total elapsed time: 207
+Currently running process: 6
+Processes in I/O:
+1, remaining time: 5
+
+3, remaining time: 34
+
+4, remaining time: 50
+
+Total elapsed time: 211
+Currently running process: 5
+Processes in I/O:
+1, remaining time: 1
+
+3, remaining time: 30
+
+4, remaining time: 46
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 214
+Currently running process: 6
+Processes in I/O:
+3, remaining time: 27
+
+5, remaining time: 30
+
+4, remaining time: 43
+
+Total elapsed time: 218
+Currently running process: 1
+Processes in I/O:
+3, remaining time: 23
+
+5, remaining time: 26
+
+4, remaining time: 39
+
+Burst complete for process: 1
+Adding to IO: 1
+Total elapsed time: 221
+Currently running process: 6
+Processes in I/O:
+3, remaining time: 20
+
+5, remaining time: 23
+
+1, remaining time: 23
+
+4, remaining time: 36
+
+Total elapsed time: 225
+Currently running process: 6
+Processes in I/O:
+3, remaining time: 16
+
+5, remaining time: 19
+
+1, remaining time: 19
+
+4, remaining time: 32
+
+Burst complete for process: 6
+Adding to IO: 6
+Total elapsed time: 228
+Currently running process: 8
+Processes in I/O:
+3, remaining time: 13
+
+5, remaining time: 16
+
+1, remaining time: 16
+
+6, remaining time: 29
+
+4, remaining time: 29
+
+Burst complete for process: 8
+Adding to IO: 8
+Total elapsed time: 231
+Currently running process: 7
+Processes in I/O:
+3, remaining time: 10
+
+5, remaining time: 13
+
+1, remaining time: 13
+
+6, remaining time: 26
+
+4, remaining time: 26
+
+8, remaining time: 32
+
+Total elapsed time: 244
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 13
+
+4, remaining time: 13
+
+8, remaining time: 19
+
+Total elapsed time: 248
+Currently running process: 1
+Processes in I/O:
+6, remaining time: 9
+
+4, remaining time: 9
+
+8, remaining time: 15
+
+Burst complete for process: 1
+Process complete: 1
+Total elapsed time: 252
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 5
+
+4, remaining time: 5
+
+8, remaining time: 11
+
+Total elapsed time: 256
+Currently running process: 5
+Processes in I/O:
+6, remaining time: 1
+
+4, remaining time: 1
+
+8, remaining time: 7
+
+Total elapsed time: 260
+Currently running process: 6
+Processes in I/O:
+8, remaining time: 3
+
+Total elapsed time: 264
+Currently running process: 4
+Processes in I/O:
+Total elapsed time: 268
+Currently running process: 5
+Processes in I/O:
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 269
+Currently running process: 6
+Processes in I/O:
+5, remaining time: 27
+
+Burst complete for process: 6
+Process complete: 6
+Total elapsed time: 273
+Currently running process: 4
+Processes in I/O:
+5, remaining time: 23
+
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 274
+Currently running process: 7
+Processes in I/O:
+5, remaining time: 22
+
+4, remaining time: 53
+
+Burst complete for process: 7
+Adding to IO: 7
+Total elapsed time: 278
+Currently running process: 2
+Processes in I/O:
+5, remaining time: 18
+
+7, remaining time: 40
+
+4, remaining time: 49
+
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 285
+Currently running process: 3
+Processes in I/O:
+5, remaining time: 11
+
+7, remaining time: 33
+
+2, remaining time: 41
+
+4, remaining time: 42
+
+Total elapsed time: 296
+Currently running process: 5
+Processes in I/O:
+7, remaining time: 22
+
+2, remaining time: 30
+
+4, remaining time: 31
+
+Total elapsed time: 300
+Currently running process: 5
+Processes in I/O:
+7, remaining time: 18
+
+2, remaining time: 26
+
+4, remaining time: 27
+
+Total elapsed time: 304
+Currently running process: 5
+Processes in I/O:
+7, remaining time: 14
+
+2, remaining time: 22
+
+4, remaining time: 23
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 307
+Currently running process: 3
+Processes in I/O:
+7, remaining time: 11
+
+2, remaining time: 19
+
+5, remaining time: 20
+
+4, remaining time: 20
+
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 314
+Currently running process: 8
+Processes in I/O:
+7, remaining time: 4
+
+2, remaining time: 12
+
+5, remaining time: 13
+
+4, remaining time: 13
+
+3, remaining time: 64
+
+Burst complete for process: 8
+Adding to IO: 8
+Total elapsed time: 320
+Currently running process: 7
+Processes in I/O:
+2, remaining time: 6
+
+5, remaining time: 7
+
+4, remaining time: 7
+
+8, remaining time: 50
+
+3, remaining time: 58
+
+Total elapsed time: 327
+Currently running process: 5
+Processes in I/O:
+8, remaining time: 43
+
+3, remaining time: 51
+
+Total elapsed time: 331
+Currently running process: 4
+Processes in I/O:
+8, remaining time: 39
+
+3, remaining time: 47
+
+Total elapsed time: 335
+Currently running process: 5
+Processes in I/O:
+8, remaining time: 35
+
+3, remaining time: 43
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 337
+Currently running process: 4
+Processes in I/O:
+5, remaining time: 12
+
+8, remaining time: 33
+
+3, remaining time: 41
+
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 339
+Currently running process: 7
+Processes in I/O:
+5, remaining time: 10
+
+8, remaining time: 31
+
+3, remaining time: 39
+
+4, remaining time: 81
+
+Burst complete for process: 7
+Adding to IO: 7
+Total elapsed time: 343
+Currently running process: 2
+Processes in I/O:
+5, remaining time: 6
+
+8, remaining time: 27
+
+3, remaining time: 35
+
+7, remaining time: 41
+
+4, remaining time: 77
+
+Total elapsed time: 349
+Currently running process: 5
+Processes in I/O:
+8, remaining time: 21
+
+3, remaining time: 29
+
+7, remaining time: 35
+
+4, remaining time: 71
+
+Burst complete for process: 5
+Adding to IO: 5
+Total elapsed time: 352
+Currently running process: 2
+Processes in I/O:
+5, remaining time: 10
+
+8, remaining time: 18
+
+3, remaining time: 26
+
+7, remaining time: 32
+
+4, remaining time: 68
+
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 362
+Currently running process: 5
+Processes in I/O:
+8, remaining time: 8
+
+3, remaining time: 16
+
+7, remaining time: 22
+
+2, remaining time: 32
+
+4, remaining time: 58
+
+Burst complete for process: 5
+Process complete: 5
+Total elapsed time: 370
+Currently running process: 8
+Processes in I/O:
+3, remaining time: 8
+
+7, remaining time: 14
+
+2, remaining time: 24
+
+4, remaining time: 50
+
+Burst complete for process: 8
+Adding to IO: 8
+Total elapsed time: 384
+Currently running process: 3
+Processes in I/O:
+2, remaining time: 10
+
+4, remaining time: 36
+
+8, remaining time: 72
+
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 398
+Currently running process: 7
+Processes in I/O:
+3, remaining time: 20
+
+4, remaining time: 22
+
+8, remaining time: 58
+
+Burst complete for process: 7
+Adding to IO: 7
+Total elapsed time: 413
+Currently running process: 2
+Processes in I/O:
+3, remaining time: 5
+
+4, remaining time: 7
+
+7, remaining time: 20
+
+8, remaining time: 43
+
+Total elapsed time: 420
+Currently running process: 4
+Processes in I/O:
+7, remaining time: 13
+
+8, remaining time: 36
+
+Total elapsed time: 424
+Currently running process: 4
+Processes in I/O:
+7, remaining time: 9
+
+8, remaining time: 32
+
+Burst complete for process: 4
+Adding to IO: 4
+Total elapsed time: 425
+Currently running process: 2
+Processes in I/O:
+7, remaining time: 8
+
+8, remaining time: 31
+
+4, remaining time: 76
+
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 427
+Currently running process: 3
+Processes in I/O:
+7, remaining time: 6
+
+8, remaining time: 29
+
+4, remaining time: 74
+
+2, remaining time: 75
+
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 433
+Currently running process: 7
+Processes in I/O:
+8, remaining time: 23
+
+3, remaining time: 58
+
+4, remaining time: 68
+
+2, remaining time: 69
+
+Burst complete for process: 7
+Adding to IO: 7
+Total elapsed time: 456
+Currently running process: 8
+Processes in I/O:
+7, remaining time: 12
+
+3, remaining time: 35
+
+4, remaining time: 45
+
+2, remaining time: 46
+
+Burst complete for process: 8
+Adding to IO: 8
+Total elapsed time: 472
+Currently running process: 7
+Processes in I/O:
+3, remaining time: 19
+
+4, remaining time: 29
+
+2, remaining time: 30
+
+8, remaining time: 86
+
+Burst complete for process: 7
+Adding to IO: 7
+Total elapsed time: 491
+Currently running process: 3
+Processes in I/O:
+7, remaining time: 6
+
+4, remaining time: 10
+
+2, remaining time: 11
+
+8, remaining time: 67
+
+Total elapsed time: 501
+Currently running process: 4
+Processes in I/O:
+2, remaining time: 1
+
+8, remaining time: 57
+
+Burst complete for process: 4
+Process complete: 4
+Total elapsed time: 504
+Currently running process: 3
+Processes in I/O:
+8, remaining time: 54
+
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 509
+Currently running process: 7
+Processes in I/O:
+3, remaining time: 17
+
+8, remaining time: 49
+
+Burst complete for process: 7
+Adding to IO: 7
+Total elapsed time: 525
+Currently running process: 2
+Processes in I/O:
+3, remaining time: 1
+
+7, remaining time: 32
+
+8, remaining time: 33
+
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 529
+Currently running process: 3
+Processes in I/O:
+7, remaining time: 28
+
+8, remaining time: 29
+
+2, remaining time: 40
+
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 557
+Currently running process: 7
+Processes in I/O:
+8, remaining time: 1
+
+3, remaining time: 11
+
+2, remaining time: 12
+
+Burst complete for process: 7
+Process complete: 7
+Total elapsed time: 567
+Currently running process: 8
+Processes in I/O:
+3, remaining time: 1
+
+2, remaining time: 2
+
+Burst complete for process: 8
+Process complete: 8
+Total elapsed time: 573
+Currently running process: 3
+Processes in I/O:
+Burst complete for process: 3
+Adding to IO: 3
+Total elapsed time: 578
+Currently running process: 2
+Processes in I/O:
+3, remaining time: 30
+
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 608
+Currently running process: 3
+Processes in I/O:
+2, remaining time: 9
+
+Burst complete for process: 3
+Process complete: 3
+Total elapsed time: 617
+Currently running process: 2
+Processes in I/O:
+Burst complete for process: 2
+Adding to IO: 2
+Total elapsed time: 666
+Currently running process: 2
+Processes in I/O:
+Burst complete for process: 2
+Process complete: 2
+Total time elapsed: 674
+Cpu utilization: 82.04747774480711
+Process 1:
+Wait time: 68
+Turnaround: 293
+Response: 0
+
+Process 6:
+Wait time: 132
+Turnaround: 347
+Response: 11
+
+Process 5:
+Wait time: 132
+Turnaround: 441
+Response: 7
+
+Process 4:
+Wait time: 56
+Turnaround: 540
+Response: 4
+
+Process 7:
+Wait time: 435
+Turnaround: 763
+Response: 96
+
+Process 8:
+Wait time: 458
+Turnaround: 767
+Response: 122
+
+Process 3:
+Wait time: 401
+Turnaround: 793
+Response: 39
+
+Process 2:
+Wait time: 409
+Turnaround: 836
+Response: 35
+
+Average wait time: 261.375
+Average turnaround: 597.5
+Average response time: 39.25

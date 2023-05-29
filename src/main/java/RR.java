@@ -27,6 +27,14 @@ public class RR {
 
     private int quanta;
 
+
+    /**
+     * Constructor for RR
+     * @param filename file to read from
+     * @param outputFile file to write to
+     * @param outputFlag flag to toggle output
+     */
+
     public RR(String filename, String outputFile, boolean outputFlag) {
         readyQueue = new QueueManager(filename);
         currentTime = 0;
@@ -40,6 +48,10 @@ public class RR {
     }
 
 
+    /**
+     * Checks if all processes are completed
+     *  true if all processes are completed
+     */
 
     public void process(){
 
@@ -109,10 +121,19 @@ public class RR {
 
     }
 
+    /**
+     * Gets the metrics of the RR
+     * @return metrics of the RR
+     */
+
     public boolean isCompleted(){
         return readyQueue.isEmpty() && IOQueue.isEmpty() && CPUProcess == null;
     }
 
+    /**
+     * processingIOQueue method to process the IOQueue
+     *
+     */
     public void processingIOQueue(){
         Iterator<Process> iterator = IOQueue.iterator();
         while(iterator.hasNext()){
@@ -128,6 +149,11 @@ public class RR {
     }
 
 
+    /**
+     * snapshot process to prints out the Process as
+     * they are being processed in the RR
+     * @return snapshot of the RR
+     */
     public String snapshot(){
         StringBuilder sb = new StringBuilder();
         sb.append("Current Time: " + currentTime);
@@ -161,6 +187,12 @@ public class RR {
         return sb.toString();
     }
 
+    /**
+     * outputToFile method to output the snapshot to a file
+     * @param filename name of the file
+     * @param sb stringbuilder to output to file
+     */
+
     public void outputToFile(String filename, StringBuilder sb) {
         if (!flag) {
             return;
@@ -180,6 +212,12 @@ public class RR {
 
 
     }
+
+    /**
+     * getMetrics method calculates the metrics of the RR and
+     * prints all values to the console
+     * @return metrics of the RR
+     */
 
     public String getMetrics(){
         StringBuilder sb = new StringBuilder();
@@ -233,6 +271,11 @@ public class RR {
         return sb.toString();
     }
 
+
+    /**
+     * getProcesses method to get the processes
+     * @return a LinkedList of processes
+     */
     public LinkedList<Process> getProcesses(){
         return completedList;
     }
