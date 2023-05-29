@@ -2,12 +2,13 @@
 Scheduling processes is an important part of an Operating System. Since there are many considerations that must be made, there are many algorithms that aim to prioritize or balance specific facets of the task. Presented here are some of the more basic and common scheduling algorithms as examples of how it is done and the tradeoffs that are made as part of this task.
 
 ##FCFS
-First Come First Serve process scheduling algorithm like the name it implies is simply First Come First Serve. This take a very simple appraoch and simply put whichever process is first on the ready queue to be CPU.
+First Come First Serve process scheduling algorithm like the name it implies is simply First Come First Serve. FCFS is a basic and straightforward algorithm for process scheduling. In this algorithm, the process are executed in the order the arrive, with the first process in the que being girst to receive the CPU. This approach ensures that tasks are executed in a predictable and sequential way. However, FCFS may lead to poor utilization of system resources if long running processes occupy the CPU, causing to wait for extended periods. Moreover, this algorithm is not suitable for time-sensitive or interactive tasks that require quick response times.  
 
 ##SJF
 Shortest Job First process scheduling algorithms, particularly the preemptive version implemented in our assignment, take the greedy algorithm approach to minimizing the turnaround by ensuring the shortest jobs are given priority, thus able to finish quickly (which in turn frees up the queue for slower processes). However, the corollary to this is that the slowest processes take even longer. Indeed, if there are a steady stream of short processes, the longest processes may never get a chance to run at all.
 
 ##Priority Scheduling
+Priority scheduling algorithm approach were each process is assigned a priority values, and the CPU is allocated to the process with the highest priority first. This approach ensures that critical and high priority tasks are executed promptly, optimizing the system performanse and responsivenss. This algorithm effectively balances the needs of different processes by giving precedence to thos with higher priority, enabling efficient task managment in various computing enviroments. 
 
 ##Round Robin
 Round Robin provides process an equal amount of CPU time. It operates on the principale of preemption, where process are temporarly interrupted and moved to the back of the queue after executing for a fixed time quantum. Round Robin is suitable ofr time-sharing systems and interactive enviroments, as it reduces latency and allows for quick context switching between processes. Round Robin can introduce overhead and inefficiencies when dealing with tasks of varying execution times, leading to potential performance degradation. 
