@@ -1,110 +1,85 @@
-import com.bears.utility.PQueueManager;
-import com.bears.utility.Process;
 
+import java.util.ArrayDeque;
 
-import java.util.*;
+public class MLQ extends Multilevel {
 
+    //Quantum 5
+    private final ArrayDeque<Job> priorityHigh;
 
-public class MLQ {
-    private PQueueManager readyQueue;
-    private int currentTime;
+    //Quantum 10
+    private final ArrayDeque<Job> priorityLow;
 
-    private Queue<Process> IOQueue;
+    public MLQ() {
+        super();
+        priorityHigh = new ArrayDeque<>();
+        priorityLow = new ArrayDeque<>();
 
-    private Process CPUProcess;
-
-    public MLQ () {
-        readyQueue = new PQueueManager("src/main/resources/input", new int[]{1, 1, 1, 1, 2, 2, 2, 2});
-        currentTime = 0;
-        IOQueue = new LinkedList<>();
-        CPUProcess = null;
+        while (!readyQueue.isEmpty()) {
+            if (readyQueue.peek().getPriority() < 5) {
+                priorityHigh.add(readyQueue.remove());
+            } else {
+                priorityLow.add(readyQueue.remove());
+            }
+        }
+        tick();
+        finalReport();
     }
 
+    private void tick() {
+        int clock = 0;
+        byte lastQueue = 0;
 
-    public void process(){
-        if (readyQueue.size() == 0){
-            throw new IllegalStateException("Queue is empty");
-        }
+        while (!(priorityHigh.isEmpty() && priorityLow.isEmpty() && ioJobs.isEmpty())) {
+            updateIO();
 
-        while (!isCompleted()){
-            if (CPUProcess == null){
-                if (!readyQueue.isEmpty()){
-                    CPUProcess = readyQueue.pop();
+            if (!priorityHigh.isEmpty()) {
+                if (lastQueue != 0) {
+                    clock = 0;
+                    lastQueue = 0;
+                    if (output) {
+                        displayStatus(priorityHigh.peek());
+                    }
                 }
-
-            }else if (CPUProcess.getBurstTme() == 0){
-                if (!CPUProcess.isFinished()) {
-                    IOQueue.add(CPUProcess);
-                    CPUProcess = null;
-                }else{
-                    CPUProcess = null;
+                administrivia(priorityHigh.peek());
+                updateWaitTimes(priorityHigh.peek());
+                if (tock(priorityHigh)) {
+                    lastQueue = -1;
+                    timeElapsed++;
+                    continue;
                 }
-                if (!readyQueue.isEmpty()){
-                    CPUProcess = readyQueue.pop();
+            } else if (!priorityLow.isEmpty()) {
+                if (lastQueue != 1) {
+                    clock = 0;
+                    lastQueue = 1;
+                    if (output) {
+                        displayStatus(priorityLow.peek());
+                    }
                 }
-            }else if (!readyQueue.isEmpty() && readyQueue.peek().getPriority() < CPUProcess.getPriority()){
-                Process newProcess = readyQueue.pop();
-                readyQueue.push(CPUProcess);
-                CPUProcess = newProcess;
+                administrivia(priorityLow.peek());
+                if (tock(priorityLow)) {
+                    lastQueue = -1;
+                    timeElapsed++;
+                    continue;
+                }
+            } else {
+                ioOnly++;
             }
-            System.out.println(snapshot());
-            processingIOQueue();
-            if (CPUProcess != null) {
-                CPUProcess.setBurstTme(CPUProcess.getBurstTme() - 1);
-            }
-
-            currentTime++;
-        }
-
-    }
-
-    public boolean isCompleted(){
-        return readyQueue.isEmpty() && IOQueue.isEmpty() && CPUProcess == null;
-    }
-
-    public void processingIOQueue(){
-        Iterator<Process> iterator = IOQueue.iterator();
-        while(iterator.hasNext()){
-            Process process = iterator.next();
-            process.setIOTme(process.getIOTime() -1);
-            if (process.getIOTime() <= 0){
-                process.advanceIterator();
-                process.setReadyQueueArrivalTime(currentTime++);
-                readyQueue.push(process);
-                iterator.remove();
-            }
+            timeElapsed++;
         }
     }
 
-    public String snapshot(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Current Time: " + currentTime);
-        if (CPUProcess == null){
-            sb.append("\nNext Process on CPU: " + "NA" + "\n");
-        }else {
-            sb.append("\nNext Process on CPU: ").append(CPUProcess.getStrName() + "\t" + CPUProcess.getBurstTme() +"\n");
-        }
-        sb.append("---------------------------------------------------------\n");
-        sb.append("List of processes in the ready queue: \n");
-        sb.append("\t\tProcess\tBurst\n");
-        sb.append(readyQueue);
-        sb.append("\n---------------------------------------------------------\n");
-        sb.append("List of processes in I/O:");
-        sb.append("\t\tProcess\tRemaining I/O time\n");
-        if (IOQueue.isEmpty()){
-            sb.append("\t\t[empty]\n");
-        }else{
-            for (Process ioProcess : IOQueue){
-                sb.append(ioProcess.getStrName() + "\t" + ioProcess.getIOTime() + "\n");
-            }
-        }
-
-        sb.append("\n" + " ::::::::::::::::::::::::::::::::::::::::::::::::::\n\n");
-
-        return sb.toString();
+    private void administrivia(Job job) {
+        checkIfFirstResponse(job);
+        updateWaitTimes(job);
     }
 
+    private void updateWaitTimes(Job currentJob) {
+        updateWaitTimes(currentJob, priorityHigh);
+        updateWaitTimes(currentJob, priorityLow);
+    }
 
-
+    public static void main(String[] args) {
+        new MLQ();
+    }
 
 }
