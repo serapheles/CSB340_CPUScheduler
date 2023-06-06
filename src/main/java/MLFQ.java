@@ -1,18 +1,27 @@
 import java.util.ArrayDeque;
 
+/**
+ * Multilevel Feedback Queue. Doesn't incorporate techniques to avoid monopolizing the highest queue(s).
+ * <p>
+ * -Kyle
+ */
 public class MLFQ extends Multilevel {
 
-    //Quantum 5
+    //Round-robin queue with quantum = 5
     private final ArrayDeque<Job> priority0;
 
-    //Quantum 10
+    //Round-robin queue with quantum = 10
     private final ArrayDeque<Job> priority1;
 
-    //FCFS
+    //Lowest-level queue using First Come, First Served.
     private final ArrayDeque<Job> priority2;
 
-    public MLFQ() {
+    /**
+     * Basic constructor, calls the super constructor before setting up local specifics and driving all the computations.
+     */
+    public MLFQ(boolean toOutput) {
         super();
+        output = toOutput;
         priority0 = new ArrayDeque<Job>();
         priority1 = new ArrayDeque<Job>();
         priority2 = new ArrayDeque<Job>();
@@ -23,18 +32,40 @@ public class MLFQ extends Multilevel {
 
         tick();
         finalReport();
-        report(text);
+        report(text, "MLFQ.txt");
+        if (output) {
+            System.out.println(text);
+        }
     }
 
+    public MLFQ(){
+        this(true);
+    }
+
+    /**
+     * Local Main method, largely for testing.
+     *
+     * @param args Unused.
+     */
     public static void main(String[] args) {
         new MLFQ();
     }
 
+    /**
+     * Calls the local methods to set response time and update wait times.
+     *
+     * @param job The current job.
+     */
     private void administrivia(Job job) {
         checkIfFirstResponse(job);
         updateWaitTimes(job);
     }
 
+    /**
+     * Calls the parent method to update wait times on all three queues.
+     *
+     * @param currentJob The current job.
+     */
     private void updateWaitTimes(Job currentJob) {
         updateWaitTimes(currentJob, priority0);
         updateWaitTimes(currentJob, priority1);
@@ -42,7 +73,8 @@ public class MLFQ extends Multilevel {
     }
 
     /**
-     * Loops until every queue is empty.
+     * While there are jobs remaining, updates IO, then checks queues in order of priority to determine the next job.
+     * This could probably be refactored if there was a need for it.
      */
     private void tick() {
         int clock = 0;

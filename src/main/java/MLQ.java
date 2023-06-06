@@ -1,16 +1,26 @@
-
 import java.util.ArrayDeque;
 
+/**
+ * Multilevel Queue using Fixed Priority Preemptive Scheduling. I'm not sure why my values are off (per your feedback);
+ * current guesses are either I'm updating (or not) something when I shouldn't be which is leading to a cumulative error,
+ * or I'm processing things wrong (that is, in a way other than expected, though with internal consistency).
+ * <p>
+ * -Kyle
+ */
 public class MLQ extends Multilevel {
 
-    //Quantum 5
+    //Higher priority Round-robin queue with quantum = 4
     private final ArrayDeque<Job> priorityHigh;
 
-    //Quantum 10
+    //Lowest-level queue using First Come, First Served.
     private final ArrayDeque<Job> priorityLow;
 
-    public MLQ() {
+    /**
+     * Basic constructor, calls the super constructor before setting up local specifics and driving all the computations.
+     */
+    public MLQ(boolean toOutput) {
         super();
+        output = toOutput;
         priorityHigh = new ArrayDeque<>();
         priorityLow = new ArrayDeque<>();
 
@@ -23,9 +33,29 @@ public class MLQ extends Multilevel {
         }
         tick();
         finalReport();
-        report(text);
+        report(text, "MLQ.txt");
+        if (output) {
+            System.out.println(text);
+        }
     }
 
+    public MLQ(){
+        this(true);
+    }
+
+    /**
+     * Local Main method, largely for testing.
+     *
+     * @param args Unused.
+     */
+    public static void main(String[] args) {
+        new MLQ();
+    }
+
+    /**
+     * While there are jobs remaining, updates IO, then checks queues in order of priority to determine the next job.
+     * This could probably be refactored if there was a need for it.
+     */
     private void tick() {
         int clock = 0;
         byte lastQueue = 0;
@@ -74,18 +104,24 @@ public class MLQ extends Multilevel {
         }
     }
 
+    /**
+     * Calls the local methods to set response time and update wait times.
+     *
+     * @param job The current job.
+     */
     private void administrivia(Job job) {
         checkIfFirstResponse(job);
         updateWaitTimes(job);
     }
 
+    /**
+     * Calls the parent method to update wait times on both queues.
+     *
+     * @param currentJob The current job.
+     */
     private void updateWaitTimes(Job currentJob) {
         updateWaitTimes(currentJob, priorityHigh);
         updateWaitTimes(currentJob, priorityLow);
-    }
-
-    public static void main(String[] args) {
-        new MLQ();
     }
 
 }

@@ -1,6 +1,16 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * Abstract parent class for other classes to inherit from. With the approach I used to ensure preemption, I realized
+ * there's a lot of overlap so this made a lot of sense. I thought of everything as seconds on a clock, hence why there
+ * are methods named "tick" and "tock"; tick is local (to the algorithm) updates/checks, while tock updates the current
+ * process (which is the same across algorithms).
+ * <p>
+ * This was named when I thought I was doing MLFQ and MLQ, and thought Rob was going to do SJF.
+ * <p>
+ * -Kyle
+ */
 public abstract class Multilevel {
 
     protected final ArrayDeque<Job> readyQueue;
@@ -8,32 +18,21 @@ public abstract class Multilevel {
     //this assignment.
     protected final TreeMap<Job, Queue<Job>> ioJobs;
     protected final ArrayList<Job> allJobs;
-    protected final boolean output = true;
+
+    //If true, print results to stdout.
+    protected boolean output = true;
     protected int timeElapsed;
     protected int ioOnly;
     protected StringBuilder text;
 
+    /**
+     * Basic constructor.
+     */
     public Multilevel() {
         readyQueue = open_processes();
         allJobs = new ArrayList<>(readyQueue);
         ioJobs = new TreeMap<Job, Queue<Job>>(Comparator.comparingInt(Job::checkNextIOBurst).thenComparingInt(Job::getPriority));
         text = new StringBuilder();
-    }
-
-    /*
-        Adapted from digitalocean.com.
-     */
-    public void report(StringBuilder text){
-        File file = new File("Output.txt");
-        try {
-            FileWriter writer = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            bufferedWriter.write(String.valueOf(text));
-            bufferedWriter.close();
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -91,6 +90,26 @@ public abstract class Multilevel {
         return null;
     }
 
+    /*
+        Adapted from digitalocean.com.
+     */
+    public void report(StringBuilder text, String filename) {
+        File file = new File(filename);
+        try {
+            FileWriter writer = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.write(String.valueOf(text));
+            bufferedWriter.close();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Loops through processes that are currently in I/O and updates their I/O times. When a IO burst reaches zero,
+     * returns it to the associated queue (relevant particularly for MLFQ).
+     */
     protected void updateIO() {
         if (!ioJobs.isEmpty()) {
             Job tempJob;
@@ -106,16 +125,25 @@ public abstract class Multilevel {
                     mapping.getKey().getNextIOBurst();
                     mapping.getValue().add(mapping.getKey());
                     it.remove();
-
                 }
             }
         }
     }
 
+    /**
+     * Calculates the CPU utilization, for cleaner string formatting.
+     *
+     * @return The cpu utilization as a float.
+     */
     protected double getRatio() {
         return (1.0 - ((double) ioOnly / (double) timeElapsed)) * 100.0;
     }
 
+    /**
+     * Determines if this is the first time a job has been active, for setting the response times.
+     *
+     * @param job The active job.
+     */
     protected void checkIfFirstResponse(Job job) {
         if (job.getResponseTime() == -1) {
             job.setResponseTime(timeElapsed);
@@ -136,6 +164,12 @@ public abstract class Multilevel {
         }
     }
 
+    /**
+     * Iterates through the jobs not in IO to update their respective wait times.
+     *
+     * @param currentJob The currently running job, since it isn't waiting.
+     * @param queue      The relevant collection; may not actually be a queue.
+     */
     protected void updateWaitTimes(Job currentJob, Collection<Job> queue) {
         for (Job j : queue) {
             if (j.equals(currentJob)) {
@@ -145,6 +179,9 @@ public abstract class Multilevel {
         }
     }
 
+    /**
+     * Reports the statistics of cpu scheduler.
+     */
     protected void finalReport() {
         text.append("Total time elapsed: ").append(timeElapsed).append("\n");
         text.append("Cpu utilization: ").append(getRatio()).append("\n");
@@ -220,6 +257,15 @@ public abstract class Multilevel {
         private int responseTime;
         private int waitTime;
 
+        /**
+         * Job constructor.
+         *
+         * @param processId The id of the job (effectively it's placement).
+         * @param cpuTimes  The cpu burst times, as a collection.
+         * @param ioTimes   The IO burst times, as a collection.
+         * @param priority  The priority of the job. Not needed for every algorithm, but actually useful for some of
+         *                  those, where this is used as a tie-breaker in comparisons.
+         */
         public Job(int processId, Collection<Integer> cpuTimes, Collection<Integer> ioTimes, int priority) {
             this.processId = processId;
             this.cpuTimes = new ArrayDeque<>(cpuTimes);
@@ -235,30 +281,68 @@ public abstract class Multilevel {
             this.waitTime = 0;
         }
 
+        /**
+         * Response time getter.
+         *
+         * @return The response time.
+         */
         public int getResponseTime() {
             return responseTime;
         }
 
+        /**
+         * Response time setter.
+         *
+         * @param responseTime The response time to set.
+         */
         public void setResponseTime(int responseTime) {
             this.responseTime = responseTime;
         }
 
+        /**
+         * Wait time getter.
+         *
+         * @return The wait time.
+         */
         public int getWaitTime() {
             return waitTime;
         }
 
+        /**
+         * Increments the wait time.
+         */
         public void updateWaitTime() {
             this.waitTime++;
         }
 
+        /**
+         * Process Id getter.
+         *
+         * @return The process id.
+         */
         public int getProcessId() {
             return processId;
         }
 
+        /**
+         * Priority getter.
+         *
+         * @return The priority.
+         */
         public int getPriority() {
             return priority;
         }
 
+       /*
+       The following two decrement methods are a bit weird. I don't remember the *exact* reason, but there is a reason,
+       revolving around updating properly.
+        */
+
+        /**
+         * Decreases the current CPU burst.
+         *
+         * @return The current CPU burst time, or null if the job is complete.
+         */
         public Integer decrementCpuBurst() {
             if (!cpuTimes.isEmpty()) {
                 int val = cpuTimes.remove();
@@ -268,6 +352,11 @@ public abstract class Multilevel {
             return null;
         }
 
+        /**
+         * Decrease the current IO burst.
+         *
+         * @return The current IO burst time, or null if the job is complete.
+         */
         public Integer decrementIOBurst() {
             if (!ioTimes.isEmpty()) {
                 int val = ioTimes.remove();
@@ -277,26 +366,56 @@ public abstract class Multilevel {
             return null;
         }
 
+        /**
+         * Get the current CPU burst time.
+         *
+         * @return The current CPU burst.
+         */
         public Integer getNextCpuBurst() {
             return cpuTimes.poll();
         }
 
+        /**
+         * Get the current CPU burst time.
+         *
+         * @return The current CPU burst.
+         */
         public Integer checkNextCpuBurst() {
             return cpuTimes.peek();
         }
 
+        /**
+         * Get the current IO burst time.
+         *
+         * @return The current IO burst.
+         */
         public Integer getNextIOBurst() {
             return ioTimes.poll();
         }
 
+        /**
+         * Get the current IO burst time.
+         *
+         * @return The current IO burst.
+         */
         public Integer checkNextIOBurst() {
             return ioTimes.peek();
         }
 
+        /**
+         * Returns the total needed time needed to complete all CPU bursts.
+         *
+         * @return The combined CPU burst time.
+         */
         public int getNeededCPUTime() {
             return neededCPUTime;
         }
 
+        /**
+         * Returns the total needed time needed to complete all IO bursts.
+         *
+         * @return The combined IO burst time.
+         */
         public int getNeededIOTime() {
             return neededIOTime;
         }
